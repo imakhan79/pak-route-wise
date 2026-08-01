@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { MapContainer, TileLayer, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -75,12 +76,8 @@ export default function GPSTracking() {
   };
 
   return (
+    <MainLayout title="Live GPS Tracking" subtitle="Real-time truck locations reported from drivers' phones.">
     <div className="p-6 md:p-8 max-w-[1600px] mx-auto space-y-6 animate-slide-up">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Live GPS Tracking</h1>
-        <p className="text-muted-foreground">Real-time truck locations reported from drivers' phones.</p>
-      </div>
-
       <div className="grid gap-4 md:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -215,5 +212,6 @@ export default function GPSTracking() {
         </Card>
       </div>
     </div>
+    </MainLayout>
   );
 }

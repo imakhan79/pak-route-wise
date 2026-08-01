@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MainLayout } from '@/components/layout/MainLayout';
 import ExportActions from "@/components/common/ExportActions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -57,12 +58,10 @@ const EFormManagement = () => {
     };
 
     return (
+        <MainLayout title="E-Form Management" subtitle="Manage and track your electronic forms.">
         <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 animate-slide-up">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">E-Form Management</h1>
-                    <p className="text-muted-foreground">Manage and track your electronic forms.</p>
-                </div>
+                <div></div>
                 <Dialog>
                     <DialogTrigger asChild>
                         <Button className="flex items-center gap-2">
@@ -180,6 +179,7 @@ const EFormManagement = () => {
                 </CardContent>
             </Card>
         </div>
+        </MainLayout>
     );
 };
 

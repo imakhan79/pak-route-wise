@@ -97,6 +97,7 @@ import GPSTracking from "./pages/tracking/GPSTracking";
 import DriverTracker from "./pages/tracking/DriverTracker";
 import Home from "./pages/marketing/Home";
 import Register from "./pages/portal/Register";
+import ConfirmEmail from "./pages/portal/ConfirmEmail";
 import PortalDashboard from "./pages/portal/Dashboard";
 import MyShipments from "./pages/portal/MyShipments";
 import ShipmentDetail from "./pages/portal/ShipmentDetail";
@@ -104,6 +105,7 @@ import RequestQuotation from "./pages/portal/RequestQuotation";
 import PortalInvoices from "./pages/portal/Invoices";
 import Support from "./pages/portal/Support";
 import Profile from "./pages/portal/Profile";
+import ModulePlaceholder from "./pages/ModulePlaceholder";
 
 
 
@@ -121,6 +123,7 @@ const App = () => (
             <Route path="/home" element={<Home />} />
             <Route path="/track/:vehicleId" element={<DriverTracker />} />
             <Route path="/portal/register" element={<Register />} />
+            <Route path="/portal/confirm" element={<ConfirmEmail />} />
             <Route path="/portal" element={<PortalRoute><PortalDashboard /></PortalRoute>} />
             <Route path="/portal/shipments" element={<PortalRoute><MyShipments /></PortalRoute>} />
             <Route path="/portal/shipments/:id" element={<PortalRoute><ShipmentDetail /></PortalRoute>} />
@@ -151,9 +154,9 @@ const App = () => (
                   {/* Customs */}
                   <Route path="/customs/gd" element={<GDFiling />} />
                   <Route path="/customs/hs-codes" element={<HSCodeLookup />} />
-                  <Route path="/customs/duty-calculator" element={<HSCodeLookup />} />
+                  <Route path="/customs/duty-calculator" element={<ModulePlaceholder title="Duty Calculator" subtitle="Estimate customs duties and taxes" />} />
                   <Route path="/customs/examination" element={<Examination />} />
-                  <Route path="/customs/gate-pass" element={<GDFiling />} />
+                  <Route path="/customs/gate-pass" element={<ModulePlaceholder title="Gate Pass" subtitle="Issue and manage terminal gate passes" />} />
 
                   {/* Import */}
                   <Route path="/import/index" element={<ImportIndex />} />
@@ -198,9 +201,9 @@ const App = () => (
 
 
                   {/* Air Cargo */}
-                  <Route path="/air-cargo/awb" element={<BillOfLading />} />
-                  <Route path="/air-cargo/handling" element={<RoadFreight />} />
-                  <Route path="/air-cargo/airlines" element={<PortDirectory />} />
+                  <Route path="/air-cargo/awb" element={<ModulePlaceholder title="AWB Management" subtitle="Manage Air Waybills for air cargo shipments" />} />
+                  <Route path="/air-cargo/handling" element={<ModulePlaceholder title="Cargo Handling" subtitle="Track air cargo handling and warehousing" />} />
+                  <Route path="/air-cargo/airlines" element={<ModulePlaceholder title="Airlines" subtitle="Manage airline partners and schedules" />} />
 
                   {/* Maritime */}
                   <Route path="/maritime/containers" element={<ContainerTracking />} />
@@ -220,16 +223,16 @@ const App = () => (
 
                   {/* Tracking */}
                   <Route path="/tracking/gps" element={<GPSTracking />} />
-                  <Route path="/tracking/containers" element={<RoadFreight />} />
-                  <Route path="/tracking/milestones" element={<RoadFreight />} />
-                  <Route path="/tracking/alerts" element={<RoadFreight />} />
+                  <Route path="/tracking/containers" element={<ContainerTracking />} />
+                  <Route path="/tracking/milestones" element={<ModulePlaceholder title="Milestones" subtitle="Shipment milestone tracking timeline" />} />
+                  <Route path="/tracking/alerts" element={<ModulePlaceholder title="Alerts" subtitle="Live exception and delay alerts" />} />
 
                   {/* HR Management */}
                   <Route path="/hr/employees" element={<EmployeeManagement />} />
                   <Route path="/hr/payroll" element={<PayrollManagement />} />
 
                   {/* Reports & Settings */}
-                  <Route path="/reports" element={<GDFiling />} />
+                  <Route path="/reports" element={<FinancialReports />} />
                   <Route path="/design-system" element={<DesignSystem />} />
                   <Route path="/settings" element={<SettingsLayout />} />
 

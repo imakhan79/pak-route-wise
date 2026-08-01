@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -53,12 +54,8 @@ const PODManagement = () => {
     };
 
     return (
+        <MainLayout title="POD Management" subtitle="Manage and verify Proof of Delivery documents.">
         <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 animate-slide-up">
-            <div className="flex flex-col gap-2">
-                <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">POD Management</h1>
-                <p className="text-muted-foreground">Manage and verify Proof of Delivery documents.</p>
-            </div>
-
             <div className="grid gap-4 md:grid-cols-3">
                 <Card>
                     <CardHeader className="pb-2">
@@ -172,6 +169,7 @@ const PODManagement = () => {
                 </CardContent>
             </Card>
         </div>
+        </MainLayout>
     );
 };
 

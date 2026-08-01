@@ -1,4 +1,5 @@
 import React from "react";
+import { MainLayout } from '@/components/layout/MainLayout';
 import ExportActions from "@/components/common/ExportActions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -25,12 +26,8 @@ const auditLogs: AuditLog[] = [
 
 const AuditTrail = () => {
     return (
+        <MainLayout title="System Audit Trail" subtitle="Comprehensive log of all user activities and system events.">
         <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 animate-slide-up">
-            <div className="flex flex-col gap-2">
-                <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">System Audit Trail</h1>
-                <p className="text-muted-foreground">Comprehensive log of all user activities and system events.</p>
-            </div>
-
             <div className="grid gap-4 md:grid-cols-3">
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -119,6 +116,7 @@ const AuditTrail = () => {
                 </CardContent>
             </Card>
         </div>
+        </MainLayout>
     );
 };
 

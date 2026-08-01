@@ -1,4 +1,5 @@
 import React from "react";
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Search, MapPin, Phone, Globe, ExternalLink } from "lucide-react";
@@ -45,12 +46,8 @@ const ports = [
 
 const PortDirectory = () => {
   return (
+    <MainLayout title="Port Directory" subtitle="Information and contacts for major ports and terminals.">
     <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 animate-slide-up">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Port Directory</h1>
-        <p className="text-muted-foreground">Information and contacts for major ports and terminals.</p>
-      </div>
-
       <div className="max-w-md relative">
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
         <Input type="search" placeholder="Search ports..." className="pl-8" />
@@ -98,6 +95,7 @@ const PortDirectory = () => {
         ))}
       </div>
     </div>
+    </MainLayout>
   );
 };
 

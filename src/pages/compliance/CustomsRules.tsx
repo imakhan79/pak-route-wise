@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Search, BookOpen, AlertCircle, ChevronRight } from "lucide-react";
@@ -42,12 +43,8 @@ const CustomsRules = () => {
     );
 
     return (
+        <MainLayout title="Customs Rules & SROs" subtitle="Searchable database of Pakistan Customs regulations.">
         <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 animate-slide-up">
-            <div className="flex flex-col gap-2">
-                <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Customs Rules & SROs</h1>
-                <p className="text-muted-foreground">Searchable database of Pakistan Customs regulations.</p>
-            </div>
-
             <div className="max-w-xl relative">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
                 <Input
@@ -117,6 +114,7 @@ const CustomsRules = () => {
                 </div>
             </div>
         </div>
+        </MainLayout>
     );
 };
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,7 @@ import { Download, TrendingUp, TrendingDown, PieChart } from "lucide-react";
 
 const FinancialReports = () => {
     return (
+        <MainLayout title="Financial Reports" subtitle="Overview of earnings, expenses, and profitability.">
         <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 animate-slide-up">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
@@ -94,6 +96,7 @@ const FinancialReports = () => {
                 </CardContent>
             </Card>
         </div>
+        </MainLayout>
     );
 };
 

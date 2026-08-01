@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MainLayout } from '@/components/layout/MainLayout';
 import ExportActions from "@/components/common/ExportActions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -40,12 +41,10 @@ const Demurrage = () => {
     };
 
     return (
+        <MainLayout title="Demurrage Management" subtitle="Track container detention and port storage charges.">
         <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 animate-slide-up">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Demurrage Management</h1>
-                    <p className="text-muted-foreground">Track container detention and port storage charges.</p>
-                </div>
+                <div></div>
                 <Dialog>
                     <DialogTrigger asChild>
                         <Button variant="outline" className="flex items-center gap-2">
@@ -153,6 +152,7 @@ const Demurrage = () => {
                 </CardContent>
             </Card>
         </div>
+        </MainLayout>
     );
 };
 

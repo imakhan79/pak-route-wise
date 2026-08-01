@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -52,12 +53,10 @@ const TransitPassPage = () => {
     };
 
     return (
+        <MainLayout title="Transit Pass" subtitle="Issue and verify transit passes for vehicles crossing the border.">
         <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 animate-slide-up">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Transit Pass</h1>
-                    <p className="text-muted-foreground">Issue and verify transit passes for vehicles crossing the border.</p>
-                </div>
+                <div></div>
                 <Dialog open={isIssueOpen} onOpenChange={setIsIssueOpen}>
                     <DialogTrigger asChild>
                         <Button className="flex items-center gap-2">
@@ -137,6 +136,7 @@ const TransitPassPage = () => {
                 </CardContent>
             </Card>
         </div>
+        </MainLayout>
     );
 };
 

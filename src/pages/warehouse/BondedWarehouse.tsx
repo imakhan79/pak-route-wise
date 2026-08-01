@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -54,12 +55,10 @@ const BondedWarehouse = () => {
     };
 
     return (
+        <MainLayout title="Bonded Warehouse" subtitle="Manage customs bonded cargo and expiry tracking.">
         <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 animate-slide-up">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Bonded Warehouse</h1>
-                    <p className="text-muted-foreground">Manage customs bonded cargo and expiry tracking.</p>
-                </div>
+                <div></div>
                 <Dialog open={isEntryOpen} onOpenChange={setIsEntryOpen}>
                     <DialogTrigger asChild>
                         <Button className="flex items-center gap-2">
@@ -174,6 +173,7 @@ const BondedWarehouse = () => {
                 </CardContent>
             </Card>
         </div>
+        </MainLayout>
     );
 };
 

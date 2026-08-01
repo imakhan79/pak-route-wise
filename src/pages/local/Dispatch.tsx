@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Search, Plus, Truck, Package, Clock, FileText, CloudDownload, Mail } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MainLayout } from '@/components/layout/MainLayout';
 import BiltyTemplate from "@/components/documents/BiltyTemplate";
 import ActionsMenu from "@/components/common/ActionsMenu";
 import ExportActions from "@/components/common/ExportActions";
@@ -72,12 +73,10 @@ const Dispatch = () => {
     };
 
     return (
+        <MainLayout title="Local Dispatch" subtitle="Manage local fleet dispatch and transportation schedules.">
         <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 animate-slide-up">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Local Dispatch</h1>
-                    <p className="text-muted-foreground">Manage local fleet dispatch and transportation schedules.</p>
-                </div>
+                <div></div>
                 <div className="flex items-center gap-3">
                     <ExportActions
                         data={dispatches}
@@ -273,6 +272,7 @@ const Dispatch = () => {
                 </DialogContent>
             </Dialog>
         </div >
+        </MainLayout>
     );
 };
 

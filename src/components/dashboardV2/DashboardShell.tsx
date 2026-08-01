@@ -6,63 +6,25 @@ import logo from '@/assets/zicon-logo.png';
 import {
   LayoutDashboard, Search, Bell, MessageSquare, CheckSquare, Calendar as CalendarIcon,
   Globe, Sun, Moon, Maximize, ChevronLeft, ChevronRight, LogOut, Sparkles, Cloud,
-  Truck, Package, FileText, Users, Ship, Warehouse, DollarSign, Settings, Building2,
+  Package, FileText, Users, DollarSign, Settings,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { NotificationDrawer } from './Widgets';
+import { filterNavGroups, type NavGroup } from './navConfig';
 
-interface NavItem {
-  label: string;
-  icon: React.ElementType;
-  path?: string;
-}
-
-const NAV_BY_ROLE: Record<string, NavItem[]> = {
-  Administrator: [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
-    { label: 'Vehicles', icon: Truck, path: '/fleet/vehicles' },
-    { label: 'GPS Tracking', icon: Package, path: '/tracking/gps' },
-    { label: 'Documents', icon: FileText, path: '/documents/bl' },
-    { label: 'Finance', icon: DollarSign, path: '/finance/invoices' },
-    { label: 'HR', icon: Users, path: '/hr/employees' },
-    { label: 'Settings', icon: Settings, path: '/settings' },
-  ],
-  Manager: [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
-    { label: 'GPS Tracking', icon: Package, path: '/tracking/gps' },
-    { label: 'Finance', icon: DollarSign, path: '/finance/invoices' },
-    { label: 'Reports', icon: FileText, path: '/reports' },
-  ],
-  'Shipping Agent': [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
-    { label: 'Road Freight', icon: Truck, path: '/freight/road' },
-    { label: 'Sea Freight', icon: Ship, path: '/freight/sea' },
-    { label: 'Documents', icon: FileText, path: '/documents/bl' },
-  ],
-  'Clearing Agent': [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
-    { label: 'GD Filing', icon: FileText, path: '/customs/gd' },
-    { label: 'HS Codes', icon: Package, path: '/customs/hs-codes' },
-  ],
-  Carrier: [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
-    { label: 'GPS Tracking', icon: Package, path: '/tracking/gps' },
-    { label: 'Vessel Schedule', icon: Ship, path: '/maritime/vessels' },
-  ],
-  Terminal: [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
-    { label: 'Warehouse', icon: Warehouse, path: '/warehouse/inventory' },
-    { label: 'Container Track', icon: Package, path: '/tracking/containers' },
-  ],
-  Customer: [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/portal' },
-    { label: 'My Shipments', icon: Package, path: '/portal/shipments' },
-    { label: 'Request Quotation', icon: FileText, path: '/portal/quotation' },
-    { label: 'Invoices', icon: DollarSign, path: '/portal/invoices' },
-    { label: 'Support', icon: Users, path: '/portal/support' },
-    { label: 'Profile', icon: Settings, path: '/portal/profile' },
-  ],
-};
+const CUSTOMER_NAV: NavGroup[] = [
+  {
+    title: '',
+    items: [
+      { label: 'Dashboard', icon: LayoutDashboard, path: '/portal' },
+      { label: 'My Shipments', icon: Package, path: '/portal/shipments' },
+      { label: 'Request Quotation', icon: FileText, path: '/portal/quotation' },
+      { label: 'Invoices', icon: DollarSign, path: '/portal/invoices' },
+      { label: 'Support', icon: Users, path: '/portal/support' },
+      { label: 'Profile', icon: Settings, path: '/portal/profile' },
+    ],
+  },
+];
 
 function useClock() {
   const [now, setNow] = useState(new Date());
@@ -73,8 +35,15 @@ function useClock() {
   return now;
 }
 
-export function DashboardShell({ roleName, children }: { roleName: string; children: ReactNode }) {
-  const { currentUser, logout } = useAuth();
+interface DashboardShellProps {
+  roleName: string;
+  children: ReactNode;
+  title?: string;
+  subtitle?: string;
+}
+
+export function DashboardShell({ roleName, children, title, subtitle }: DashboardShellProps) {
+  const { currentUser, logout, hasPermission } = useAuth();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [dark, setDark] = useState(false);
@@ -82,7 +51,7 @@ export function DashboardShell({ roleName, children }: { roleName: string; child
   const [profileOpen, setProfileOpen] = useState(false);
   const now = useClock();
 
-  const navItems = NAV_BY_ROLE[roleName] || NAV_BY_ROLE.Administrator;
+  const navGroups = roleName === 'Customer' ? CUSTOMER_NAV : filterNavGroups(hasPermission);
 
   const toggleDark = () => {
     document.documentElement.classList.toggle('dark');
@@ -134,29 +103,38 @@ export function DashboardShell({ roleName, children }: { roleName: string; child
           )}
         </div>
 
-        <nav className="flex-1 space-y-1 overflow-y-auto px-3">
-          {navItems.map((item) => (
-            <NavLink key={item.label} to={item.path || '#'} end={item.label === 'Dashboard'}>
-              {({ isActive }) => (
-                <motion.div
-                  whileHover={{ x: collapsed ? 0 : 3 }}
-                  className={cn(
-                    'group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors',
-                    isActive ? 'text-white shadow-lg' : 'text-foreground/70 hover:bg-black/[0.04]'
-                  )}
-                  style={isActive ? { background: 'var(--gradient-primary)' } : undefined}
-                >
-                  <item.icon className={cn('h-[18px] w-[18px] shrink-0 transition-transform group-hover:scale-110', isActive && 'drop-shadow')} />
-                  <AnimatePresence>
-                    {!collapsed && (
-                      <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="truncate">
-                        {item.label}
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
+        <nav className="flex-1 space-y-4 overflow-y-auto px-3 pb-3">
+          {navGroups.map((group) => (
+            <div key={group.title || 'root'} className="space-y-1">
+              {group.title && !collapsed && (
+                <h4 className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+                  {group.title}
+                </h4>
               )}
-            </NavLink>
+              {group.items.map((item) => (
+                <NavLink key={item.path} to={item.path} end={item.path === '/' || item.path === '/portal'}>
+                  {({ isActive }) => (
+                    <motion.div
+                      whileHover={{ x: collapsed ? 0 : 3 }}
+                      className={cn(
+                        'group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors',
+                        isActive ? 'text-white shadow-lg' : 'text-foreground/70 hover:bg-black/[0.04]'
+                      )}
+                      style={isActive ? { background: 'var(--gradient-primary)' } : undefined}
+                    >
+                      <item.icon className={cn('h-[18px] w-[18px] shrink-0 transition-transform group-hover:scale-110', isActive && 'drop-shadow')} />
+                      <AnimatePresence>
+                        {!collapsed && (
+                          <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="truncate">
+                            {item.label}
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  )}
+                </NavLink>
+              ))}
+            </div>
           ))}
         </nav>
 
@@ -256,7 +234,15 @@ export function DashboardShell({ roleName, children }: { roleName: string; child
           </div>
         </header>
 
-        <main className="px-4 pb-8">{children}</main>
+        <main className="px-4 pb-8">
+          {title && (
+            <div className="mb-4">
+              <h1 className="text-xl font-bold text-foreground">{title}</h1>
+              {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
+            </div>
+          )}
+          {children}
+        </main>
       </div>
 
       <NotificationDrawer open={notifOpen} onClose={() => setNotifOpen(false)} />

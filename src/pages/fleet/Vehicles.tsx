@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -87,12 +88,10 @@ const Vehicles = () => {
     };
 
     return (
+        <MainLayout title="Vehicle Management" subtitle="Manage fleet assets, maintenance status, and assignments.">
         <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 animate-slide-up">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Vehicle Management</h1>
-                    <p className="text-muted-foreground">Manage fleet assets, maintenance status, and assignments.</p>
-                </div>
+                <div></div>
                 <Button onClick={() => { setEditingVehicle(undefined); setIsDialogOpen(true); }} className="flex items-center gap-2">
                     <Plus className="h-4 w-4" /> Add Vehicle
                 </Button>
@@ -244,6 +243,7 @@ const Vehicles = () => {
                 </AlertDialogContent>
             </AlertDialog>
         </div>
+        </MainLayout>
     );
 };
 

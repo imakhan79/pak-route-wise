@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MainLayout } from '@/components/layout/MainLayout';
 import ExportActions from "@/components/common/ExportActions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -104,15 +105,13 @@ const DocumentsManager = () => {
 
     const filteredDocs = docs.filter(d => d.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    if (isLoading) return <div className="p-8">Loading documents...</div>;
+    if (isLoading) return <MainLayout title="Document Management"><div className="p-8">Loading documents...</div></MainLayout>;
 
     return (
+        <MainLayout title="Document Management" subtitle="Centralized repository for all logistics compliance files.">
         <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 animate-slide-up">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Document Management</h1>
-                    <p className="text-muted-foreground">Centralized repository for all logistics compliance files.</p>
-                </div>
+                <div></div>
                 <div className="flex gap-2">
                     <Dialog open={isTypeSelectionOpen} onOpenChange={setIsTypeSelectionOpen}>
                         <DialogTrigger asChild>
@@ -362,6 +361,7 @@ const DocumentsManager = () => {
                 </AlertDialogContent>
             </AlertDialog>
         </div>
+        </MainLayout>
     );
 };
 
