@@ -1,24 +1,33 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { toast } from 'sonner';
+import { MailCheck } from 'lucide-react';
 import logo from '@/assets/zicon-logo.png';
 
 export default function Register() {
-  const { registerCustomer } = useAuth();
-  const navigate = useNavigate();
-  const [form, setForm] = useState({ company: '', fullName: '', email: '', phone: '', username: '', password: '' });
+  const [form, setForm] = useState({ company: '', fullName: '', email: '', phone: '', password: '', confirmPassword: '' });
   const [isLoading, setIsLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
   const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement>) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (form.password !== form.confirmPassword) {
+      toast.error("Passwords don't match");
+      return;
+    }
+    if (form.password.length < 6) {
+      toast.error('Password must be at least 6 characters');
+      return;
+    }
+
     setIsLoading(true);
     try {
       const { data: existing } = await supabase.from('customers').select('id').eq('email', form.email).maybeSingle();
@@ -33,25 +42,51 @@ export default function Register() {
         if (error) throw error;
       }
 
-      const ok = registerCustomer({
-        fullName: form.fullName,
-        username: form.username,
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email: form.email,
-        phone: form.phone,
         password: form.password,
-        department: form.company,
+        options: {
+          data: { full_name: form.fullName, company: form.company, phone: form.phone },
+          emailRedirectTo: `${window.location.origin}/portal/confirm`,
+        },
       });
 
-      if (ok) {
-        toast.success('Account created', { description: `Welcome, ${form.fullName}!` });
-        navigate('/portal', { replace: true });
+      if (signUpError) throw signUpError;
+
+      if (data.session) {
+        // Email confirmation is disabled on this Supabase project - session is active immediately.
+        toast.success('Account created! Redirecting...');
+        window.location.href = '/portal/confirm';
+        return;
       }
+
+      setEmailSent(true);
     } catch (err: any) {
       toast.error(`Registration failed: ${err.message}`);
     } finally {
       setIsLoading(false);
     }
   };
+
+  if (emailSent) {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center bg-gray-50 p-4">
+        <Card className="w-full max-w-md border-t-4 border-t-primary shadow-xl">
+          <CardContent className="space-y-4 pt-8 text-center">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+              <MailCheck className="h-7 w-7 text-primary" />
+            </div>
+            <h1 className="text-xl font-bold">Check your email</h1>
+            <p className="text-sm text-muted-foreground">
+              We've sent a confirmation link to <span className="font-medium text-foreground">{form.email}</span>.
+              Click the link to activate your account, then sign in.
+            </p>
+            <Link to="/login" className="inline-block text-sm font-medium text-primary hover:underline">Back to Sign In</Link>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 p-4">
@@ -65,8 +100,8 @@ export default function Register() {
 
         <Card className="border-t-4 border-t-primary shadow-xl">
           <CardHeader>
-            <CardTitle>Register</CardTitle>
-            <CardDescription>Book shipments, request quotations, and track cargo online.</CardDescription>
+            <CardTitle>Sign Up</CardTitle>
+            <CardDescription>Book shipments, request quotations, and track cargo online. We'll email you a confirmation link.</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-3">
@@ -82,7 +117,7 @@ export default function Register() {
               </div>
               <div className="space-y-1.5">
                 <Label>Email</Label>
-                <Input type="email" required value={form.email} onChange={set('email')} />
+                <Input type="email" required value={form.email} onChange={set('email')} placeholder="you@company.com" />
               </div>
               <div className="space-y-1.5">
                 <Label>Phone</Label>
@@ -90,12 +125,12 @@ export default function Register() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <Label>Username</Label>
-                  <Input required value={form.username} onChange={set('username')} />
+                  <Label>Password</Label>
+                  <Input type="password" required minLength={6} value={form.password} onChange={set('password')} />
                 </div>
                 <div className="space-y-1.5">
-                  <Label>Password</Label>
-                  <Input type="password" required value={form.password} onChange={set('password')} />
+                  <Label>Confirm Password</Label>
+                  <Input type="password" required value={form.confirmPassword} onChange={set('confirmPassword')} />
                 </div>
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>

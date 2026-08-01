@@ -7,6 +7,8 @@ interface MagneticButtonProps {
   className?: string;
   onClick?: () => void;
   variant?: 'primary' | 'secondary' | 'ghost';
+  type?: 'button' | 'submit';
+  disabled?: boolean;
 }
 
 const VARIANT_CLASS: Record<NonNullable<MagneticButtonProps['variant']>, string> = {
@@ -17,7 +19,7 @@ const VARIANT_CLASS: Record<NonNullable<MagneticButtonProps['variant']>, string>
   ghost: 'bg-white/10 text-white border border-white/30 backdrop-blur-md',
 };
 
-export function MagneticButton({ children, className, onClick, variant = 'primary' }: MagneticButtonProps) {
+export function MagneticButton({ children, className, onClick, variant = 'primary', type = 'button', disabled }: MagneticButtonProps) {
   const ref = useRef<HTMLButtonElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [ripple, setRipple] = useState<{ x: number; y: number; id: number } | null>(null);
@@ -43,6 +45,8 @@ export function MagneticButton({ children, className, onClick, variant = 'primar
   return (
     <motion.button
       ref={ref}
+      type={type}
+      disabled={disabled}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setPos({ x: 0, y: 0 })}
       onClick={handleClick}
@@ -50,7 +54,7 @@ export function MagneticButton({ children, className, onClick, variant = 'primar
       transition={{ type: 'spring', stiffness: 150, damping: 12, mass: 0.3 }}
       whileTap={{ scale: 0.95 }}
       className={cn(
-        'relative overflow-hidden rounded-full px-8 py-4 font-semibold text-sm tracking-wide transition-shadow duration-300 hover:shadow-2xl',
+        'relative overflow-hidden rounded-full px-8 py-4 font-semibold text-sm tracking-wide transition-shadow duration-300 hover:shadow-2xl disabled:opacity-60 disabled:pointer-events-none',
         VARIANT_CLASS[variant],
         className
       )}

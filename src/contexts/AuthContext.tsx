@@ -10,6 +10,8 @@ interface AuthContextType {
     logs: AuditLog[];
     login: (username: string, pass: string) => boolean;
     registerCustomer: (user: Omit<User, 'id' | 'roleId' | 'status' | 'failedLoginAttempts' | 'requiresPasswordChange'>) => boolean;
+    /** Syncs a real, confirmed Supabase Auth user into the local session as a Customer. */
+    bridgeSupabaseUser: (supabaseUserId: string, email: string, fullName: string, phone?: string, department?: string) => void;
     logout: () => void;
     hasPermission: (module: ModuleId, action: PermissionAction) => boolean;
 
@@ -321,6 +323,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return true;
     };
 
+    const bridgeSupabaseUser = (supabaseUserId: string, email: string, fullName: string, phone?: string, department?: string) => {
+        setUsers(prev => {
+            const existing = prev.find(u => u.id === supabaseUserId || u.username === email);
+            if (existing) {
+                setCurrentUser(existing);
+                return prev;
+            }
+            const newUser: User = {
+                id: supabaseUserId,
+                fullName: fullName || email,
+                username: email,
+                email,
+                phone: phone || '',
+                roleId: 'role-user',
+                status: 'active',
+                failedLoginAttempts: 0,
+                requiresPasswordChange: false,
+                department,
+            };
+            setCurrentUser(newUser);
+            return [...prev, newUser];
+        });
+        logAction('Login Success', 'auth', `Confirmed Supabase customer signed in: ${email}`);
+    };
+
     const logout = () => {
         logAction('Logout', 'auth', 'User logged out');
         setCurrentUser(null);
@@ -387,6 +414,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             logs,
             login,
             registerCustomer,
+            bridgeSupabaseUser,
             logout,
             hasPermission,
             addUser,
