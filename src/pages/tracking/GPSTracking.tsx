@@ -137,9 +137,14 @@ export default function GPSTracking() {
               rows.map(({ vehicle, live }) => {
                 const status: VehicleStatus = live ? vehicleStatus(live) : 'stale';
                 return (
-                  <button
+                  <div
                     key={vehicle.id}
+                    role="button"
+                    tabIndex={0}
                     onClick={() => live && setSelectedVehicleId(vehicle.id)}
+                    onKeyDown={(e) => {
+                      if ((e.key === 'Enter' || e.key === ' ') && live) setSelectedVehicleId(vehicle.id);
+                    }}
                     className={cn(
                       'w-full text-left rounded-lg border p-3 transition-colors',
                       selectedVehicleId === vehicle.id ? 'border-primary bg-primary/5' : 'border-border hover:bg-muted/50',
@@ -171,7 +176,7 @@ export default function GPSTracking() {
                     >
                       <Copy className="h-3 w-3" /> Copy tracking link
                     </button>
-                  </button>
+                  </div>
                 );
               })
             )}
