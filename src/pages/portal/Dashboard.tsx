@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import PortalLayout from './PortalLayout';
 import { usePortalCustomer, usePortalShipments, usePortalInvoices } from '@/hooks/usePortal';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { KPICard } from '@/components/dashboardV2/KPICard';
+import { WelcomeHero, QuickActionsPanel, DataTableCard, AIInsightsWidget } from '@/components/dashboardV2/Widgets';
 import { Button } from '@/components/ui/button';
 import { Package, FileText, Receipt, Plus } from 'lucide-react';
 
@@ -16,55 +16,47 @@ export default function Dashboard() {
 
   return (
     <PortalLayout>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Welcome, {customer?.contact_person || customer?.name || 'Customer'}</h1>
-          <p className="text-muted-foreground">{customer?.name}</p>
-        </div>
+      <WelcomeHero
+        name={customer?.contact_person || customer?.name || 'Customer'}
+        subtitle={customer?.name ? `${customer.name} · Here's an overview of your shipments and invoices.` : 'Track shipments, invoices, and requests in one place.'}
+      />
+
+      <div className="mb-6 flex justify-end">
         <Link to="/portal/quotation">
           <Button><Plus className="mr-1.5 h-4 w-4" /> Request Quotation</Button>
         </Link>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-3">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Shipments</CardTitle>
-            <Package className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent><div className="text-2xl font-bold">{active}</div></CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Shipments</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent><div className="text-2xl font-bold">{shipments.length}</div></CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Invoices Due</CardTitle>
-            <Receipt className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent><div className="text-2xl font-bold">{dueInvoices}</div></CardContent>
-        </Card>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <KPICard label="Active Shipments" value={active} icon={Package} color="hsl(1 58% 27%)" />
+        <KPICard label="Total Shipments" value={shipments.length} icon={FileText} color="hsl(36 89% 53%)" />
+        <KPICard label="Invoices Due" value={dueInvoices} icon={Receipt} color="hsl(1 58% 40%)" />
       </div>
 
-      <Card className="mt-6">
-        <CardHeader><CardTitle>Recent Shipments</CardTitle></CardHeader>
-        <CardContent className="space-y-2">
-          {shipments.length === 0 && <p className="text-sm text-muted-foreground">No shipments yet.</p>}
-          {shipments.slice(0, 5).map((s: any) => (
-            <Link key={s.id} to={`/portal/shipments/${s.id}`} className="flex items-center justify-between rounded-lg border p-3 hover:bg-muted/50">
-              <div>
-                <p className="font-mono text-sm font-semibold">{s.shipment_id}</p>
-                <p className="text-xs text-muted-foreground">{s.origin} → {s.destination}</p>
-              </div>
-              <Badge variant="outline">{s.status}</Badge>
-            </Link>
-          ))}
-        </CardContent>
-      </Card>
+      <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          <DataTableCard
+            title="Recent Shipments"
+            columns={['Shipment', 'Route', 'Status']}
+            rows={shipments.slice(0, 5).map((s: any) => [s.shipment_id, `${s.origin} → ${s.destination}`, s.status])}
+          />
+        </div>
+        <QuickActionsPanel
+          actions={[
+            { label: 'Request Quotation', key: 'booking' },
+            { label: 'Track Shipment', key: 'track' },
+          ]}
+        />
+      </div>
+
+      <div className="mt-6">
+        <AIInsightsWidget
+          insights={[
+            shipments.length > 0 ? `You have ${active} shipment(s) currently in progress.` : 'No active shipments right now — request a quotation to get started.',
+            dueInvoices > 0 ? `${dueInvoices} invoice(s) awaiting payment.` : 'All invoices are settled.',
+          ]}
+        />
+      </div>
     </PortalLayout>
   );
 }

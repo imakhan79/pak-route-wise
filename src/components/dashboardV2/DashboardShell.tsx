@@ -54,6 +54,14 @@ const NAV_BY_ROLE: Record<string, NavItem[]> = {
     { label: 'Warehouse', icon: Warehouse, path: '/warehouse/inventory' },
     { label: 'Container Track', icon: Package, path: '/tracking/containers' },
   ],
+  Customer: [
+    { label: 'Dashboard', icon: LayoutDashboard, path: '/portal' },
+    { label: 'My Shipments', icon: Package, path: '/portal/shipments' },
+    { label: 'Request Quotation', icon: FileText, path: '/portal/quotation' },
+    { label: 'Invoices', icon: DollarSign, path: '/portal/invoices' },
+    { label: 'Support', icon: Users, path: '/portal/support' },
+    { label: 'Profile', icon: Settings, path: '/portal/profile' },
+  ],
 };
 
 function useClock() {
@@ -128,7 +136,7 @@ export function DashboardShell({ roleName, children }: { roleName: string; child
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-3">
           {navItems.map((item) => (
-            <NavLink key={item.label} to={item.path || '#'} end={item.path === '/'}>
+            <NavLink key={item.label} to={item.path || '#'} end={item.label === 'Dashboard'}>
               {({ isActive }) => (
                 <motion.div
                   whileHover={{ x: collapsed ? 0 : 3 }}
