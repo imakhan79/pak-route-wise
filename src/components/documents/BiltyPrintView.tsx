@@ -92,7 +92,7 @@ export function BiltyPrintView({ document, open, onOpenChange }: BiltyPrintViewP
 
                     {/* Header */}
                     <div className="flex flex-col items-center mb-10 border-b-2 border-black pb-4">
-                        <img src="/kohesar_logo_print.png" alt="Kohesar Logistics" className="h-32 object-contain mb-2" />
+                        <img src="/kohesar_logo_print.png" alt="Zicon Technology" className="h-32 object-contain mb-2" />
                         <div className="border-2 border-black px-8 py-2 rounded-md bg-gray-50">
                             <h2 className="text-2xl font-bold uppercase text-center flex flex-col sm:flex-row gap-2">
                                 <span>Bilty Pass</span>

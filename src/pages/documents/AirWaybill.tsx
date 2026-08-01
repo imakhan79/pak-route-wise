@@ -109,7 +109,7 @@ export default function AirWaybill() {
 
     // Header
     doc.setFontSize(18);
-    doc.text('Kohesar Logistics - Air Waybills', 14, 20);
+    doc.text('Zicon Technology - Air Waybills', 14, 20);
     doc.setFontSize(10);
     doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 28);
 
@@ -157,7 +157,7 @@ export default function AirWaybill() {
   const handleExportWord = () => {
     // Create a simple HTML table for Word
     let html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><head><meta charset='utf-8'><title>Air Waybills</title></head><body>`;
-    html += `<h1>Kohesar Logistics - AWB List</h1>`;
+    html += `<h1>Zicon Technology - AWB List</h1>`;
     html += `<table border="1" style="border-collapse: collapse; width: 100%;"><thead><tr><th>AWB #</th><th>Flight</th><th>Route</th><th>Shipper</th><th>Consignee</th><th>Weight</th><th>Status</th></tr></thead><tbody>`;
 
     documents.forEach(d => {

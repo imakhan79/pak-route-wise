@@ -39,7 +39,7 @@ export function ShipmentPrintView({ shipment, open, onOpenChange }: ShipmentPrin
                         <div className="w-1/4">
                             <img
                                 src="/kohesar_logo.png"
-                                alt="Kohesar Logistics"
+                                alt="Zicon Technology"
                                 className="h-24 w-auto object-contain"
                             />
                         </div>
@@ -160,7 +160,7 @@ export function ShipmentPrintView({ shipment, open, onOpenChange }: ShipmentPrin
                             <div className="pt-8">
                                 <div className="border-b border-black mb-2"></div>
                                 <p className="text-xs font-bold text-black uppercase tracking-wider">Authorized Signature</p>
-                                <p className="text-[10px] text-gray-500">For Kohesar Logistics (Pvt) Ltd</p>
+                                <p className="text-[10px] text-gray-500">For Zicon Technology</p>
                             </div>
                         </div>
 

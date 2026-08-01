@@ -104,9 +104,9 @@ export function AWBPrintView({ document, open, onOpenChange }: AWBPrintViewProps
 
                     {/* Header */}
                     <div className="flex items-center gap-6 mb-6">
-                        <img src="/kohesar_logo_print.png" alt="Kohesar Logistics" className="h-24 object-contain" />
+                        <img src="/kohesar_logo_print.png" alt="Zicon Technology" className="h-24 object-contain" />
                         <div className="flex flex-col justify-center space-y-1">
-                            <p className="font-bold text-2xl uppercase tracking-wide text-gray-800">Kohesar Logistics</p>
+                            <p className="font-bold text-2xl uppercase tracking-wide text-gray-800">Zicon Technology</p>
                             <div className="text-sm text-gray-600">
                                 <p>contact@kohesarlogistics.com</p>
                                 <p>123 Logistics Way, Karachi, Pakistan</p>
@@ -144,7 +144,7 @@ export function AWBPrintView({ document, open, onOpenChange }: AWBPrintViewProps
                         {/* Box 3: Carrier Agent */}
                         <div className="border-black border-r border-b p-2">
                             <p className="text-xs font-bold uppercase mb-1">Issuing Carrier's Agent Name and City</p>
-                            <p className="font-bold">Kohesar Logistics</p>
+                            <p className="font-bold">Zicon Technology</p>
                             <p className="text-sm">Karachi, Pakistan</p>
                         </div>
 

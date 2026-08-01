@@ -6,7 +6,7 @@ export default function BLLegalNote() {
             <div className="flex items-center gap-4 mb-2">
                 <img
                     src="/kohesar_logo.png"
-                    alt="Kohesar Logistics (Private Limited)"
+                    alt="Zicon Technology"
                     className="h-8 w-auto object-contain"
                 />
                 <div className="font-bold uppercase text-[10px] tracking-wide">

@@ -6,50 +6,50 @@
 
 @layer base {
   :root {
-    /* 
-      Kohesar Logistics Brand System 
-      Primary Brand Color: Cyan/Teal (Approx #06b6d4) -> HSL 189 94% 43%
-      Secondary Brand Color: Dark Slate / Gunmetal -> HSL 215 28% 17%
+    /*
+      Zicon Technology Brand System
+      Primary: Dark Maroon #6E1F1D -> HSL 1 58% 27%
+      Secondary: Orange #F29A1A -> HSL 36 89% 53%
+      Accent: Silver Gray #A9A9A9 -> HSL 0 0% 66%
     */
 
-    /* Base Colors - HIGH CONTRAST */
-    --background: 210 40% 98%;
-    --foreground: 0 0% 0%;
-    /* Pure Black for crisp text */
+    /* Base Colors */
+    --background: 220 23% 97%;
+    /* Light Background #F7F8FA */
+    --foreground: 0 0% 10%;
 
-    /* Card & Popover */
+    /* Card & Popover - White cards */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
+    --card-foreground: 0 0% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
+    --popover-foreground: 0 0% 10%;
 
-    /* Brand Primary - Kohesar Cyan */
-    --primary: 189 94% 43%;
+    /* Brand Primary - Dark Maroon */
+    --primary: 1 58% 27%;
     --primary-foreground: 0 0% 100%;
 
-    /* Brand Secondary */
-    --secondary: 215 28% 17%;
+    /* Brand Secondary - Orange */
+    --secondary: 36 89% 53%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Muted / Neutral - Darker for visibility */
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215 25% 35%;
-    /* Much darker gray for readability */
+    /* Muted / Neutral */
+    --muted: 220 20% 94%;
+    --muted-foreground: 0 0% 35%;
 
-    /* Accent */
-    --accent: 189 94% 95%;
-    --accent-foreground: 189 94% 30%;
+    /* Accent - Silver Gray */
+    --accent: 0 0% 88%;
+    --accent-foreground: 1 58% 20%;
 
     /* Destructive */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     /* Borders & Inputs */
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 189 94% 43%;
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 1 58% 27%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
     /* Semantic Colors */
     --success: 142 71% 45%;
@@ -61,58 +61,56 @@
     --pending: 262 83% 58%;
     --pending-foreground: 0 0% 100%;
 
-    /* Sidebar Theme - Dark Professional */
-    --sidebar-background: 222 47% 11%;
+    /* Sidebar Theme - Dark Maroon Professional */
+    --sidebar-background: 1 40% 10%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 189 94% 43%;
+    --sidebar-primary: 36 89% 53%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent: 1 35% 18%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 217 33% 17%;
-    --sidebar-ring: 189 94% 43%;
+    --sidebar-border: 1 35% 18%;
+    --sidebar-ring: 36 89% 53%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(189 94% 43%) 0%, hsl(190 100% 35%) 100%);
-    --gradient-dark: linear-gradient(135deg, hsl(222 47% 11%) 0%, hsl(222 47% 18%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 40% 99%) 100%);
+    /* Gradients - Hover Effects: Orange -> Dark Maroon */
+    --gradient-primary: linear-gradient(135deg, hsl(36 89% 53%) 0%, hsl(1 58% 27%) 100%);
+    --gradient-dark: linear-gradient(135deg, hsl(1 40% 10%) 0%, hsl(1 35% 18%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 23% 99%) 100%);
 
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --shadow-glow: 0 0 15px hsl(189 94% 43% / 0.4);
+    --shadow-glow: 0 0 15px hsl(36 89% 53% / 0.4);
   }
 
   .dark {
-    --background: 222 47% 6%;
+    --background: 1 20% 8%;
     --foreground: 0 0% 100%;
-    /* Pure White */
 
-    --card: 222 47% 10%;
+    --card: 1 20% 12%;
     --card-foreground: 0 0% 100%;
-    --popover: 222 47% 10%;
+    --popover: 1 20% 12%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 189 94% 43%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 36 89% 53%;
+    --primary-foreground: 0 0% 10%;
 
-    --secondary: 217 33% 17%;
+    --secondary: 1 40% 30%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 85%;
-    /* Much brighter gray */
+    --muted: 1 15% 18%;
+    --muted-foreground: 0 0% 85%;
 
-    --accent: 189 94% 15%;
+    --accent: 0 0% 30%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 189 94% 43%;
+    --border: 1 15% 20%;
+    --input: 1 15% 20%;
+    --ring: 36 89% 53%;
   }
 }
 

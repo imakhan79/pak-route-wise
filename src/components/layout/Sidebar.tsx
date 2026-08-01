@@ -295,8 +295,8 @@ const MobileNavFooter = () => (
         <Building2 className="h-5 w-5" />
       </div>
       <div className="flex-1 truncate">
-        <p className="text-sm font-bold text-sidebar-foreground">Kohesar Logistics Private Limited</p>
-        <p className="text-xs text-sidebar-foreground/60 font-mono">NTN: 8968606-4</p>
+        <p className="text-sm font-bold text-sidebar-foreground">Zicon Technology</p>
+        <p className="text-xs text-sidebar-foreground/60 font-mono">Logistics Management System</p>
       </div>
     </div>
   </div>
@@ -343,7 +343,7 @@ export function SidebarContent() {
       <div className="flex h-32 shrink-0 items-center justify-center border-b border-sidebar-border px-2 bg-white shadow-sm z-10 overflow-hidden">
         <img
           src="/kohesar_logo.png"
-          alt="Kohesar Logistics"
+          alt="Zicon Technology"
           className="h-full w-full object-contain p-1 transform transition-transform hover:scale-105"
         />
       </div>

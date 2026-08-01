@@ -64,7 +64,7 @@ export default function Login() {
                 {/* Logo Section */}
                 <div className="flex flex-col items-center space-y-2">
                     <div className="bg-white p-3 rounded-xl shadow-sm border border-gray-100">
-                        <img src="/kohesar_logo.png" alt="Kohesar Logistics" className="h-12 w-auto" />
+                        <img src="/kohesar_logo.png" alt="Zicon Technology" className="h-12 w-auto" />
                     </div>
                     <div className="text-center">
                         <h1 className="text-2xl font-bold tracking-tight text-gray-950 dark:text-white">Logistics Management System</h1>
@@ -162,7 +162,7 @@ export default function Login() {
                 </Card>
 
                 <div className="text-center text-xs text-gray-600 dark:text-gray-400 font-medium">
-                    <p>© 2025 Kohesar Logistics. All rights reserved.</p>
+                    <p>© 2025 Zicon Technology. All rights reserved.</p>
                     <div className="flex justify-center gap-4 mt-2">
                         <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
                         <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>

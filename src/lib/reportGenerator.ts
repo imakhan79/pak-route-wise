@@ -102,7 +102,7 @@ export async function generatePDF(inspectionCase: InspectionCase, options: Expor
     if (options.includeLogo) {
         doc.setFontSize(18);
         doc.setFont('helvetica', 'bold');
-        doc.text('Kohesar Logistics', margin, y);
+        doc.text('Zicon Technology', margin, y);
         y += 10;
     }
 

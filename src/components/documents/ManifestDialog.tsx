@@ -46,7 +46,7 @@ export function ManifestDialog({
                 manifestItems: [],
                 status: 'draft',
                 // Defaults for required fields to avoid type errors
-                carrier: 'Kohesar Logistics',
+                carrier: 'Zicon Technology',
                 vesselFlightTruck: '',
                 voyageFlightNo: '',
                 origin: '',

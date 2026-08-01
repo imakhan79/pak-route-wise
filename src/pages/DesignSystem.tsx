@@ -12,7 +12,7 @@ import { CheckCircle, AlertTriangle, AlertCircle, Info, Truck, Package, Anchor }
 
 const DesignSystem = () => {
     return (
-        <MainLayout title="Kohesar Design System" subtitle="Official UI/UX Guidelines & Component Library">
+        <MainLayout title="Zicon Design System" subtitle="Official UI/UX Guidelines & Component Library">
             <div className="space-y-12 pb-20 animate-slide-up">
 
                 {/* 1. Brand Guidelines & Colors */}
@@ -20,7 +20,7 @@ const DesignSystem = () => {
                     <div>
                         <h2 className="text-2xl font-bold tracking-tight mb-2">1. Brand Identity & Colors</h2>
                         <p className="text-muted-foreground">
-                            Primary brand colors for Kohesar Logistics. These tokens should be used consistently across the platform.
+                            Primary brand colors for Zicon Technology. These tokens should be used consistently across the platform.
                         </p>
                     </div>
 

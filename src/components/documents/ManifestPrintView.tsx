@@ -112,9 +112,9 @@ export function ManifestPrintView({ document, open, onOpenChange }: ManifestPrin
 
                     {/* Header */}
                     <div className="flex items-center gap-6 mb-8">
-                        <img src="/kohesar_logo_print.png" alt="Kohesar Logistics" className="h-24 object-contain" />
+                        <img src="/kohesar_logo_print.png" alt="Zicon Technology" className="h-24 object-contain" />
                         <div className="flex flex-col justify-center space-y-1">
-                            <p className="font-bold text-2xl uppercase tracking-wide text-gray-800">Kohesar Logistics</p>
+                            <p className="font-bold text-2xl uppercase tracking-wide text-gray-800">Zicon Technology</p>
                             <div className="text-sm text-gray-600">
                                 <p>contact@kohesarlogistics.com</p>
                                 <p>123 Logistics Way, Karachi, Pakistan</p>
