@@ -11,7 +11,8 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
-import { Search, Plus, Truck, MoreVertical, Edit, Trash2, Wrench } from "lucide-react";
+import { Search, Plus, Truck, MoreVertical, Edit, Trash2, Wrench, MapPin } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useVehicles, Vehicle } from "@/hooks/useVehicles";
 import { VehicleDialog } from "@/components/fleet/VehicleDialog";
 import {
@@ -29,6 +30,13 @@ const Vehicles = () => {
     const { vehicles, isLoading, addVehicle, updateVehicle, deleteVehicle } = useVehicles();
     const [searchTerm, setSearchTerm] = useState("");
     const { toast } = useToast();
+    const navigate = useNavigate();
+
+    const copyTrackingLink = (vehicle: Vehicle) => {
+        const url = `${window.location.origin}/track/${vehicle.id}${vehicle.tracking_token ? `?token=${vehicle.tracking_token}` : ""}`;
+        navigator.clipboard.writeText(url);
+        toast({ title: "Tracking link copied", description: "Send it to the driver to start live tracking." });
+    };
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingVehicle, setEditingVehicle] = useState<Vehicle | undefined>(undefined);
@@ -170,6 +178,12 @@ const Vehicles = () => {
                                                     <DropdownMenuContent align="end">
                                                         <DropdownMenuItem onClick={() => handleEdit(vehicle)}>
                                                             <Edit className="mr-2 h-4 w-4" /> Edit
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem onClick={() => navigate(`/tracking/gps`)}>
+                                                            <MapPin className="mr-2 h-4 w-4" /> View Live Location
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem onClick={() => copyTrackingLink(vehicle)}>
+                                                            <MapPin className="mr-2 h-4 w-4" /> Copy Tracking Link
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem
                                                             className="text-red-600 focus:text-red-600"

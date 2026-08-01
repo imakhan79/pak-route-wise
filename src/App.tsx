@@ -32,7 +32,6 @@ import IGMManagement from "./pages/import/IGMManagement";
 import ReleaseOrders from "./pages/import/ReleaseOrders";
 import BillOfLading from "./pages/documents/BillOfLading";
 import PackingList from "./pages/documents/PackingList";
-import TransitManagement from "./pages/atta/TransitManagement";
 import DesignSystem from "./pages/DesignSystem";
 
 import Manifest from "./pages/documents/Manifest";
@@ -73,6 +72,8 @@ import OperationsWorkflow from "./pages/OperationsWorkflow";
 import CourierBooking from "./pages/courier/CourierBooking";
 import CourierTracking from "./pages/courier/CourierTracking";
 import CourierManagement from "./pages/courier/CourierManagement";
+import GPSTracking from "./pages/tracking/GPSTracking";
+import DriverTracker from "./pages/tracking/DriverTracker";
 
 
 
@@ -87,6 +88,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/track/:vehicleId" element={<DriverTracker />} />
 
             <Route path="/*" element={
               <ProtectedRoute>
@@ -178,7 +180,7 @@ const App = () => (
                   <Route path="/compliance/audit" element={<AuditTrail />} />
 
                   {/* Tracking */}
-                  <Route path="/tracking/gps" element={<TransitManagement />} />
+                  <Route path="/tracking/gps" element={<GPSTracking />} />
                   <Route path="/tracking/containers" element={<RoadFreight />} />
                   <Route path="/tracking/milestones" element={<RoadFreight />} />
                   <Route path="/tracking/alerts" element={<RoadFreight />} />

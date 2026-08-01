@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 .vercel
+
+.vercel
+.env*
+.claude
+supabase/.temp

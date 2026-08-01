@@ -12,6 +12,7 @@ export interface Vehicle {
     capacity: string; // e.g., "20 tons"
     status: 'Active' | 'Inactive' | 'Maintenance';
     driver_id?: string | null;
+    tracking_token?: string | null;
 }
 
 export function useVehicles() {
