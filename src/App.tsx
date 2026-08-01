@@ -38,7 +38,7 @@ function PortalRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-import Index from "./pages/Index";
+import DashboardRouter from "./pages/dashboards/DashboardRouter";
 import RoadFreight from "./pages/freight/RoadFreight";
 import SeaFreight from "./pages/freight/SeaFreight";
 import AirFreight from "./pages/freight/AirFreight";
@@ -132,7 +132,7 @@ const App = () => (
             <Route path="/*" element={
               <ProtectedRoute>
                 <Routes>
-                  <Route path="/" element={<Index />} />
+                  <Route path="/" element={<DashboardRouter />} />
 
                   {/* Freight Management */}
                   <Route path="/freight/road" element={<RoadFreight />} />
