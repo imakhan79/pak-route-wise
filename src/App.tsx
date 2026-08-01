@@ -74,6 +74,7 @@ import CourierTracking from "./pages/courier/CourierTracking";
 import CourierManagement from "./pages/courier/CourierManagement";
 import GPSTracking from "./pages/tracking/GPSTracking";
 import DriverTracker from "./pages/tracking/DriverTracker";
+import Home from "./pages/marketing/Home";
 
 
 
@@ -88,6 +89,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/track/:vehicleId" element={<DriverTracker />} />
 
             <Route path="/*" element={
