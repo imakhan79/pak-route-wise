@@ -314,6 +314,7 @@ export function SidebarContent() {
       if (item.id === 'settings' && !hasPermission('settings', 'view')) return false;
       if (item.id === 'warehouse' && !hasPermission('warehousing', 'view')) return false;
       if (item.id === 'customs' && !hasPermission('customs_gd', 'view')) return false;
+      if (item.id === 'tracking' && !hasPermission('tracking', 'view')) return false;
       return true;
     });
 

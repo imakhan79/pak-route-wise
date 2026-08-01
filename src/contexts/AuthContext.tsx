@@ -51,6 +51,7 @@ const MOCK_ROLES: Role[] = [
             finance: ['view', 'create', 'edit', 'delete', 'export', 'approve', 'lock'],
             reports: ['view', 'create', 'edit', 'delete', 'export', 'approve', 'lock'],
             settings: ['view', 'create', 'edit', 'delete', 'export', 'approve', 'lock'],
+            tracking: ['view', 'create', 'edit', 'delete', 'export', 'approve', 'lock'],
         }
     },
     {
@@ -68,6 +69,7 @@ const MOCK_ROLES: Role[] = [
             import: ['view', 'create', 'edit', 'approve'],
             export: ['view', 'create', 'edit', 'approve'],
             reports: ['view', 'export'],
+            tracking: ['view', 'export', 'approve'],
         } as any
     },
     {
@@ -84,6 +86,72 @@ const MOCK_ROLES: Role[] = [
             customs_gd: ['view'],
             import: ['view'],
             export: ['view'],
+            tracking: ['view'],
+        } as any
+    },
+    {
+        id: 'role-shipping-agent',
+        name: 'Shipping Agent',
+        description: 'Books and manages freight shipments and bills of lading on behalf of customers.',
+        isSystem: true,
+        permissions: {
+            dashboard: ['view'],
+            freight_sea: ['view', 'create', 'edit'],
+            freight_air: ['view', 'create', 'edit'],
+            freight_road: ['view', 'create', 'edit'],
+            freight_rail: ['view', 'create', 'edit'],
+            bl_management: ['view', 'create', 'edit'],
+            customs_gd: ['view'],
+            import: ['view'],
+            export: ['view'],
+            reports: ['view'],
+            tracking: ['view'],
+        } as any
+    },
+    {
+        id: 'role-clearing-agent',
+        name: 'Clearing Agent',
+        description: 'Handles customs clearance, GD filing, and duty assessment on behalf of importers/exporters.',
+        isSystem: true,
+        permissions: {
+            dashboard: ['view'],
+            customs_gd: ['view', 'create', 'edit'],
+            import: ['view', 'create', 'edit'],
+            export: ['view', 'create', 'edit'],
+            cnf: ['view', 'create', 'edit'],
+            afghan_transit: ['view'],
+            reports: ['view'],
+            tracking: ['view'],
+        } as any
+    },
+    {
+        id: 'role-carrier-agent',
+        name: 'Carrier Agent',
+        description: 'Represents a carrier/shipping line - manages vessel schedules and transshipment.',
+        isSystem: true,
+        permissions: {
+            dashboard: ['view'],
+            freight_sea: ['view', 'edit'],
+            bl_management: ['view'],
+            cnf: ['view'],
+            transshipment: ['view', 'edit'],
+            reports: ['view'],
+            tracking: ['view', 'edit'],
+        } as any
+    },
+    {
+        id: 'role-terminal',
+        name: 'Terminal Operator',
+        description: 'Manages port/terminal handling, container yard, and customs examination coordination.',
+        isSystem: true,
+        permissions: {
+            dashboard: ['view'],
+            warehousing: ['view', 'create', 'edit'],
+            customs_gd: ['view', 'edit'],
+            afghan_transit: ['view'],
+            transshipment: ['view', 'edit'],
+            reports: ['view'],
+            tracking: ['view'],
         } as any
     }
 ];
@@ -131,6 +199,62 @@ const MOCK_USERS: User[] = [
         password: 'User@123',
         department: 'Data Entry',
         location: 'Lahore Office',
+    },
+    {
+        id: 'u4',
+        fullName: 'Shipping Agent',
+        username: 'agent',
+        email: 'agent@logistics.com',
+        phone: '+92 300 0000004',
+        roleId: 'role-shipping-agent',
+        status: 'active',
+        failedLoginAttempts: 0,
+        requiresPasswordChange: false,
+        password: 'Agent@123',
+        department: 'Shipping',
+        location: 'Karachi Office',
+    },
+    {
+        id: 'u7',
+        fullName: 'Clearing Agent',
+        username: 'clearing',
+        email: 'clearing@logistics.com',
+        phone: '+92 300 0000007',
+        roleId: 'role-clearing-agent',
+        status: 'active',
+        failedLoginAttempts: 0,
+        requiresPasswordChange: false,
+        password: 'Clearing@123',
+        department: 'Customs Clearance',
+        location: 'Karachi Port',
+    },
+    {
+        id: 'u5',
+        fullName: 'Carrier Agent',
+        username: 'carrier',
+        email: 'carrier@logistics.com',
+        phone: '+92 300 0000005',
+        roleId: 'role-carrier-agent',
+        status: 'active',
+        failedLoginAttempts: 0,
+        requiresPasswordChange: false,
+        password: 'Carrier@123',
+        department: 'Carrier Relations',
+        location: 'Karachi Port',
+    },
+    {
+        id: 'u6',
+        fullName: 'Terminal Operator',
+        username: 'terminal',
+        email: 'terminal@logistics.com',
+        phone: '+92 300 0000006',
+        roleId: 'role-terminal',
+        status: 'active',
+        failedLoginAttempts: 0,
+        requiresPasswordChange: false,
+        password: 'Terminal@123',
+        department: 'Terminal Operations',
+        location: 'Karachi Port',
     }
 ];
 

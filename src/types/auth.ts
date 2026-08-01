@@ -36,7 +36,8 @@ export type ModuleId =
     | 'warehousing'
     | 'finance'
     | 'reports'
-    | 'settings'; // Admin
+    | 'settings' // Admin
+    | 'tracking'; // Live GPS / Container / Milestone Tracking
 
 export interface Role {
     id: string;
@@ -74,6 +75,7 @@ export const AVAILABLE_MODULES: { id: ModuleId; label: string }[] = [
     { id: 'finance', label: 'Finance & Invoicing' },
     { id: 'reports', label: 'Reports & Analytics' },
     { id: 'settings', label: 'System Administration' },
+    { id: 'tracking', label: 'Live Tracking (GPS/Container/Milestones)' },
 ];
 
 export const AVAILABLE_ACTIONS: { id: PermissionAction; label: string }[] = [

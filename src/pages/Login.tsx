@@ -157,6 +157,18 @@ export default function Login() {
                             <Button variant="outline" size="sm" className="text-xs font-medium text-gray-700 dark:text-gray-200 border-gray-300" onClick={() => handleDemoFill('user', 'User@123')}>
                                 User
                             </Button>
+                            <Button variant="outline" size="sm" className="text-xs font-medium text-gray-700 dark:text-gray-200 border-gray-300" onClick={() => handleDemoFill('agent', 'Agent@123')}>
+                                Shipping Agent
+                            </Button>
+                            <Button variant="outline" size="sm" className="text-xs font-medium text-gray-700 dark:text-gray-200 border-gray-300" onClick={() => handleDemoFill('clearing', 'Clearing@123')}>
+                                Clearing Agent
+                            </Button>
+                            <Button variant="outline" size="sm" className="text-xs font-medium text-gray-700 dark:text-gray-200 border-gray-300" onClick={() => handleDemoFill('carrier', 'Carrier@123')}>
+                                Carrier Agent
+                            </Button>
+                            <Button variant="outline" size="sm" className="text-xs font-medium text-gray-700 dark:text-gray-200 border-gray-300 col-span-3" onClick={() => handleDemoFill('terminal', 'Terminal@123')}>
+                                Terminal Operator
+                            </Button>
                         </div>
                     </CardFooter>
                 </Card>
