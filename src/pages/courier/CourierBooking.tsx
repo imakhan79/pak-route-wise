@@ -6,8 +6,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Label } from '@/components/ui/label';
 import { Package, Truck, Clock, DollarSign, MapPin, CheckCircle2, Loader2, Calendar } from 'lucide-react';
 import { useState, useMemo } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 
 type DeliveryMethod = 'standard' | 'express' | 'same-day';
 
@@ -22,9 +24,23 @@ interface CourierFormData {
 }
 
 export default function CourierBooking() {
+    const queryClient = useQueryClient();
     const [isBooking, setIsBooking] = useState(false);
     const [isCalculating, setIsCalculating] = useState(false);
     const [showEstimate, setShowEstimate] = useState(false);
+
+    const { data: recentBookings = [] } = useQuery({
+        queryKey: ['shipments', 'recent-courier'],
+        queryFn: async () => {
+            const { data, error } = await supabase
+                .from('shipments')
+                .select('shipment_id, destination, weight')
+                .order('created_at', { ascending: false })
+                .limit(2);
+            if (error) return [];
+            return data;
+        },
+    });
 
     const [formData, setFormData] = useState<CourierFormData>({
         pickup: '',
@@ -69,22 +85,40 @@ export default function CourierBooking() {
         }, 600);
     };
 
-    const handleConfirmBooking = () => {
+    const handleConfirmBooking = async () => {
         setIsBooking(true);
-        setTimeout(() => {
-            setIsBooking(false);
-            toast.success(`Booking Confirmed! Tracking ID: PK-${Math.floor(Math.random() * 900000 + 100000)}`);
-            setShowEstimate(false);
-            setFormData({
-                pickup: '',
-                delivery: '',
-                pickupTime: '',
-                packageType: 'parcel',
-                weight: '',
-                dimensions: '',
-                method: 'standard'
-            });
-        }, 1500);
+        const trackingId = `PK-${Math.floor(Math.random() * 900000 + 100000)}`;
+
+        const { error } = await supabase.from('shipments').insert({
+            shipment_id: trackingId,
+            origin: formData.pickup,
+            destination: formData.delivery,
+            commodity: formData.packageType,
+            weight: parseFloat(formData.weight) || null,
+            packages: 1,
+            eta: formData.pickupTime ? new Date(formData.pickupTime).toISOString() : null,
+            status: 'pending',
+        });
+
+        setIsBooking(false);
+
+        if (error) {
+            toast.error(`Booking failed: ${error.message}`);
+            return;
+        }
+
+        toast.success(`Booking Confirmed! Tracking ID: ${trackingId}`);
+        queryClient.invalidateQueries({ queryKey: ['shipments'] });
+        setShowEstimate(false);
+        setFormData({
+            pickup: '',
+            delivery: '',
+            pickupTime: '',
+            packageType: 'parcel',
+            weight: '',
+            dimensions: '',
+            method: 'standard'
+        });
     };
 
     return (
@@ -310,20 +344,19 @@ export default function CourierBooking() {
                                 <CardTitle className="text-xs uppercase tracking-widest text-muted-foreground">Recent Bookings</CardTitle>
                             </CardHeader>
                             <CardContent className="text-sm space-y-3 pb-4">
-                                <div className="p-3 bg-card border rounded-xl flex justify-between items-center hover:shadow-sm transition-all cursor-pointer">
-                                    <div className="flex flex-col">
-                                        <span className="font-bold text-xs">PK-182901</span>
-                                        <span className="text-[10px] text-muted-foreground">to Lahore</span>
-                                    </div>
-                                    <span className="font-mono text-xs font-bold text-primary">PKR 1,450</span>
-                                </div>
-                                <div className="p-3 bg-card border rounded-xl flex justify-between items-center hover:shadow-sm transition-all cursor-pointer">
-                                    <div className="flex flex-col">
-                                        <span className="font-bold text-xs">PK-182875</span>
-                                        <span className="text-[10px] text-muted-foreground">to Islamabad</span>
-                                    </div>
-                                    <span className="font-mono text-xs font-bold text-primary">PKR 2,100</span>
-                                </div>
+                                {recentBookings.length === 0 ? (
+                                    <p className="text-xs text-muted-foreground text-center py-2">No bookings yet.</p>
+                                ) : (
+                                    recentBookings.map((b) => (
+                                        <div key={b.shipment_id} className="p-3 bg-card border rounded-xl flex justify-between items-center hover:shadow-sm transition-all cursor-pointer">
+                                            <div className="flex flex-col">
+                                                <span className="font-bold text-xs">{b.shipment_id}</span>
+                                                <span className="text-[10px] text-muted-foreground">to {b.destination}</span>
+                                            </div>
+                                            <span className="font-mono text-xs font-bold text-primary">{b.weight ? `${b.weight}kg` : '—'}</span>
+                                        </div>
+                                    ))
+                                )}
                             </CardContent>
                         </Card>
                     </div>

@@ -1,7 +1,7 @@
 import {
   LayoutDashboard, Truck, Ship, Plane, FileText, Package, Globe, Warehouse, MapPin,
   DollarSign, Shield, BarChart3, Settings, Box, ClipboardCheck, ArrowRightLeft, Anchor,
-  Layers, Users,
+  Layers, Users, Building2,
 } from 'lucide-react';
 import { ModuleId } from '@/types/auth';
 
@@ -21,6 +21,12 @@ export interface NavGroup {
 // for modules that predate the ModuleId permission model).
 export const NAV_GROUPS: NavGroup[] = [
   { title: '', items: [{ label: 'Dashboard', icon: LayoutDashboard, path: '/' }] },
+  {
+    title: 'Customers',
+    items: [
+      { label: 'Customer Directory', icon: Building2, path: '/customers' },
+    ],
+  },
   {
     title: 'Operations',
     items: [
@@ -135,6 +141,7 @@ export const NAV_GROUPS: NavGroup[] = [
     title: 'Asset Management',
     items: [
       { label: 'Vehicles', icon: Truck, path: '/fleet/vehicles' },
+      { label: 'Drivers', icon: Users, path: '/fleet/drivers' },
     ],
   },
   {

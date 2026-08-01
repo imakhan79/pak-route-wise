@@ -11,6 +11,7 @@ export interface User {
     status: UserStatus;
     lastLogin?: Date;
     failedLoginAttempts: number;
+    lockedUntil?: Date;
     requiresPasswordChange: boolean;
     department?: string;
     location?: string;

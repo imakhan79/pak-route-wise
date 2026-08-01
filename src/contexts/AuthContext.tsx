@@ -29,6 +29,9 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const MAX_FAILED_LOGIN_ATTEMPTS = 5;
+const LOCKOUT_DURATION_MS = 15 * 60 * 1000;
+
 // --- Mock Data ---
 
 const MOCK_ROLES: Role[] = [
@@ -283,23 +286,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             return false;
         }
 
+        if (user.lockedUntil && user.lockedUntil.getTime() > Date.now()) {
+            const minutesLeft = Math.ceil((user.lockedUntil.getTime() - Date.now()) / 60000);
+            toast.error(`Account locked after too many failed attempts. Try again in ${minutesLeft} minute${minutesLeft === 1 ? '' : 's'}.`);
+            logAction('Login Blocked', 'auth', `Locked account attempt: ${username}`);
+            return false;
+        }
+
         if (user.status !== 'active') {
             logAction('Login Blocked', 'auth', `Inactive account attempt: ${username}`);
             return false;
         }
 
         // Simple string comparison for mock. In real app, use bcrypt.compare
-        // If the user was just created via UI without explicit password, fallback to 'password' or skip check logic if desired? 
-        // For this demo, let's assume all created users get a default if we didn't set one, or stricter check.
         const validPass = user.password === pass;
 
         if (validPass) {
-            setCurrentUser(user);
+            const cleanUser = { ...user, failedLoginAttempts: 0, lockedUntil: undefined };
+            if (user.failedLoginAttempts > 0 || user.lockedUntil) {
+                setUsers(prev => prev.map(u => u.id === user.id ? cleanUser : u));
+            }
+            setCurrentUser(cleanUser);
             logAction('Login Success', 'auth', `User ${username} logged in`);
             return true;
         } else {
-            // In a real app we would increment failedLoginAttempts here
-            logAction('Login Failed', 'auth', `Invalid password for: ${username}`);
+            const attempts = user.failedLoginAttempts + 1;
+            const willLock = attempts >= MAX_FAILED_LOGIN_ATTEMPTS;
+
+            setUsers(prev => prev.map(u => u.id === user.id ? {
+                ...u,
+                failedLoginAttempts: attempts,
+                lockedUntil: willLock ? new Date(Date.now() + LOCKOUT_DURATION_MS) : u.lockedUntil,
+            } : u));
+
+            if (willLock) {
+                toast.error('Too many failed attempts. Account locked for 15 minutes.');
+                logAction('Login Blocked', 'auth', `Account locked after ${attempts} failed attempts: ${username}`);
+            } else {
+                logAction('Login Failed', 'auth', `Invalid password for: ${username} (attempt ${attempts}/${MAX_FAILED_LOGIN_ATTEMPTS})`);
+            }
             return false;
         }
     };

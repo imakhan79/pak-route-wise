@@ -39,6 +39,7 @@ function PortalRoute({ children }: { children: React.ReactNode }) {
 }
 
 import DashboardRouter from "./pages/dashboards/DashboardRouter";
+import CustomerDirectory from "./pages/customers/CustomerDirectory";
 import RoadFreight from "./pages/freight/RoadFreight";
 import SeaFreight from "./pages/freight/SeaFreight";
 import AirFreight from "./pages/freight/AirFreight";
@@ -79,6 +80,7 @@ import ContainerTracking from "./pages/maritime/ContainerTracking";
 import VesselSchedule from "./pages/maritime/VesselSchedule";
 import PortDirectory from "./pages/maritime/PortDirectory";
 import Vehicles from "./pages/fleet/Vehicles";
+import Drivers from "./pages/fleet/Drivers";
 import Invoices from "./pages/finance/Invoices";
 import DutyPayments from "./pages/finance/DutyPayments";
 import Demurrage from "./pages/finance/Demurrage";
@@ -136,6 +138,7 @@ const App = () => (
               <ProtectedRoute>
                 <Routes>
                   <Route path="/" element={<DashboardRouter />} />
+                  <Route path="/customers" element={<CustomerDirectory />} />
 
                   {/* Freight Management */}
                   <Route path="/freight/road" element={<RoadFreight />} />
@@ -193,6 +196,7 @@ const App = () => (
 
                   {/* Fleet */}
                   <Route path="/fleet/vehicles" element={<Vehicles />} />
+                  <Route path="/fleet/drivers" element={<Drivers />} />
 
                   {/* Courier Service */}
                   <Route path="/courier/booking" element={<CourierBooking />} />

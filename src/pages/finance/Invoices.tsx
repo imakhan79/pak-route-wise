@@ -7,59 +7,39 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
 import { Search, Plus, FileText, DollarSign, CreditCard } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ExportActions from "@/components/common/ExportActions";
+import { useInvoices, InvoiceStatus } from "@/hooks/useInvoices";
+import { useCustomers } from "@/hooks/useCustomers";
 
-interface Invoice {
-    id: string;
-    invoiceNo: string;
-    client: string;
-    type: string;
-    amount: number;
-    date: string;
-    dueDate: string;
-    status: "Paid" | "Pending" | "Overdue";
-}
-
-const initialInvoices: Invoice[] = [
-    { id: "1", invoiceNo: "INV-2023-001", client: "ABC Textiles", type: "Freight Check", amount: 150000, date: "2023-11-20", dueDate: "2023-11-27", status: "Paid" },
-    { id: "2", invoiceNo: "INV-2023-002", client: "Global Traders", type: "Customs Clearance", amount: 45000, date: "2023-11-25", dueDate: "2023-12-02", status: "Pending" },
-    { id: "3", invoiceNo: "INV-2023-003", client: "Auto Parts Ltd", type: "Warehousing", amount: 25000, date: "2023-11-10", dueDate: "2023-11-17", status: "Overdue" },
-];
+const STATUS_LABEL: Record<InvoiceStatus, string> = {
+    draft: 'Draft',
+    issued: 'Issued',
+    paid: 'Paid',
+    overdue: 'Overdue',
+};
 
 const Invoices = () => {
-    const [invoices, setInvoices] = useState<Invoice[]>(initialInvoices);
+    const { invoices, isLoading, stats, searchTerm, setSearchTerm, addInvoice, updateStatus } = useInvoices();
+    const { customers } = useCustomers();
     const [isCreateOpen, setIsCreateOpen] = useState(false);
-    const { toast } = useToast();
-    const [searchTerm, setSearchTerm] = useState("");
 
     const handleCreateInvoice = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
 
-        const newInvoice: Invoice = {
-            id: Math.random().toString(),
-            invoiceNo: `INV-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000)}`,
-            client: formData.get("client") as string,
-            type: formData.get("type") as string,
+        addInvoice({
+            customer_id: formData.get("customer_id") as string,
             amount: Number(formData.get("amount")),
-            date: new Date().toISOString().split('T')[0],
-            dueDate: formData.get("dueDate") as string,
-            status: "Pending"
-        };
-
-        setInvoices([newInvoice, ...invoices]);
-        setIsCreateOpen(false);
-        toast({
-            title: "Invoice Generated",
-            description: `${newInvoice.invoiceNo} for ${newInvoice.client} created.`
+            due_date: (formData.get("dueDate") as string) || null,
         });
+        setIsCreateOpen(false);
+        e.currentTarget.reset();
     };
 
     return (
-        <MainLayout title="Invoices" subtitle="Manage client billing and payment tracking.">
+        <MainLayout title="Invoices" subtitle="Manage client billing and payment tracking — shared with the customer portal.">
             <div className="space-y-6 animate-slide-up">
                 <div className="flex flex-col md:flex-row justify-end items-start md:items-center gap-4">
                     <div className="flex items-center gap-3">
@@ -67,9 +47,9 @@ const Invoices = () => {
                             data={invoices}
                             fileName="invoices_export"
                             columnMapping={{
-                                invoiceNo: "Invoice #",
-                                client: "Client Name",
-                                amount: "Amount (PKR)"
+                                customer_name: "Customer",
+                                amount: "Amount (PKR)",
+                                status: "Status",
                             }}
                         />
                         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
@@ -84,27 +64,22 @@ const Invoices = () => {
                                 </DialogHeader>
                                 <form onSubmit={handleCreateInvoice} className="grid gap-4 py-4">
                                     <div className="grid gap-2">
-                                        <Label htmlFor="client">Client Name</Label>
-                                        <Input id="client" name="client" placeholder="e.g. ABC Corp" required />
-                                    </div>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="type">Service Type</Label>
-                                        <Select name="type" required>
+                                        <Label htmlFor="customer_id">Customer</Label>
+                                        <Select name="customer_id" required>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Select Service" />
+                                                <SelectValue placeholder="Select customer" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value="Freight Check">Freight & Transport</SelectItem>
-                                                <SelectItem value="Customs Clearance">Customs Clearance</SelectItem>
-                                                <SelectItem value="Warehousing">Warehousing</SelectItem>
-                                                <SelectItem value="Consultancy">Consultancy</SelectItem>
+                                                {customers.map((c) => (
+                                                    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                                                ))}
                                             </SelectContent>
                                         </Select>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="grid gap-2">
                                             <Label htmlFor="amount">Amount (PKR)</Label>
-                                            <Input id="amount" name="amount" type="number" placeholder="0.00" required />
+                                            <Input id="amount" name="amount" type="number" step="0.01" min="0" placeholder="0.00" required />
                                         </div>
                                         <div className="grid gap-2">
                                             <Label htmlFor="dueDate">Due Date</Label>
@@ -121,11 +96,11 @@ const Invoices = () => {
                 <div className="grid gap-4 md:grid-cols-3">
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+                            <CardTitle className="text-sm font-medium">Total Revenue (Paid)</CardTitle>
                             <DollarSign className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">Rs. {invoices.reduce((acc, curr) => acc + (curr.status === "Paid" ? curr.amount : 0), 0).toLocaleString()}</div>
+                            <div className="text-2xl font-bold">Rs. {stats.totalRevenue.toLocaleString()}</div>
                         </CardContent>
                     </Card>
                     <Card>
@@ -134,7 +109,7 @@ const Invoices = () => {
                             <CreditCard className="h-4 w-4 text-yellow-600" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold text-yellow-600">Rs. {invoices.reduce((acc, curr) => acc + (curr.status !== "Paid" ? curr.amount : 0), 0).toLocaleString()}</div>
+                            <div className="text-2xl font-bold text-yellow-600">Rs. {stats.pending.toLocaleString()}</div>
                         </CardContent>
                     </Card>
                     <Card>
@@ -143,7 +118,7 @@ const Invoices = () => {
                             <FileText className="h-4 w-4 text-blue-600" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">{invoices.length}</div>
+                            <div className="text-2xl font-bold">{stats.count}</div>
                         </CardContent>
                     </Card>
                 </div>
@@ -151,12 +126,12 @@ const Invoices = () => {
                 <Card className="shadow-md">
                     <CardHeader>
                         <div className="flex items-center justify-between">
-                            <CardTitle>Recent Invoices</CardTitle>
+                            <CardTitle>Invoices</CardTitle>
                             <div className="relative w-64">
                                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
                                 <Input
                                     type="search"
-                                    placeholder="Search client..."
+                                    placeholder="Search customer..."
                                     className="pl-8"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -165,41 +140,55 @@ const Invoices = () => {
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Invoice #</TableHead>
-                                    <TableHead>Client</TableHead>
-                                    <TableHead>Service</TableHead>
-                                    <TableHead>Date</TableHead>
-                                    <TableHead>Amount</TableHead>
-                                    <TableHead>Status</TableHead>
-                                    <TableHead className="text-right">Action</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {invoices.filter(i => i.client.toLowerCase().includes(searchTerm.toLowerCase()) || i.invoiceNo.toLowerCase().includes(searchTerm.toLowerCase())).map((inv) => (
-                                    <TableRow key={inv.id}>
-                                        <TableCell className="font-mono">{inv.invoiceNo}</TableCell>
-                                        <TableCell className="font-medium">{inv.client}</TableCell>
-                                        <TableCell>{inv.type}</TableCell>
-                                        <TableCell>{inv.date}</TableCell>
-                                        <TableCell>Rs. {inv.amount.toLocaleString()}</TableCell>
-                                        <TableCell>
-                                            <Badge variant={
-                                                inv.status === "Paid" ? "default" :
-                                                    inv.status === "Overdue" ? "destructive" : "secondary"
-                                            } className={inv.status === "Paid" ? "bg-green-600" : ""}>
-                                                {inv.status}
-                                            </Badge>
-                                        </TableCell>
-                                        <TableCell className="text-right">
-                                            <Button variant="ghost" size="sm">View</Button>
-                                        </TableCell>
+                        {isLoading ? (
+                            <div className="text-center py-8 text-muted-foreground">Loading invoices...</div>
+                        ) : (
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Invoice</TableHead>
+                                        <TableHead>Customer</TableHead>
+                                        <TableHead>Due Date</TableHead>
+                                        <TableHead>Amount</TableHead>
+                                        <TableHead>Status</TableHead>
+                                        <TableHead className="text-right">Action</TableHead>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                                </TableHeader>
+                                <TableBody>
+                                    {invoices.length === 0 ? (
+                                        <TableRow>
+                                            <TableCell colSpan={6} className="text-center h-24 text-muted-foreground">
+                                                No invoices found.
+                                            </TableCell>
+                                        </TableRow>
+                                    ) : (
+                                        invoices.map((inv) => (
+                                            <TableRow key={inv.id}>
+                                                <TableCell className="font-mono text-xs">{inv.id.slice(0, 8)}</TableCell>
+                                                <TableCell className="font-medium">{inv.customer_name}</TableCell>
+                                                <TableCell>{inv.due_date || '—'}</TableCell>
+                                                <TableCell>Rs. {inv.amount.toLocaleString()}</TableCell>
+                                                <TableCell>
+                                                    <Badge variant={
+                                                        inv.status === "paid" ? "default" :
+                                                            inv.status === "overdue" ? "destructive" : "secondary"
+                                                    } className={inv.status === "paid" ? "bg-green-600" : ""}>
+                                                        {STATUS_LABEL[inv.status]}
+                                                    </Badge>
+                                                </TableCell>
+                                                <TableCell className="text-right">
+                                                    {inv.status !== 'paid' && (
+                                                        <Button variant="ghost" size="sm" onClick={() => updateStatus(inv.id, 'paid')}>
+                                                            Mark Paid
+                                                        </Button>
+                                                    )}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))
+                                    )}
+                                </TableBody>
+                            </Table>
+                        )}
                     </CardContent>
                 </Card>
             </div>
