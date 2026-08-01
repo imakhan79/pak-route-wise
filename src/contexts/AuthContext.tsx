@@ -9,6 +9,7 @@ interface AuthContextType {
     roles: Role[];
     logs: AuditLog[];
     login: (username: string, pass: string) => boolean;
+    registerCustomer: (user: Omit<User, 'id' | 'roleId' | 'status' | 'failedLoginAttempts' | 'requiresPasswordChange'>) => boolean;
     logout: () => void;
     hasPermission: (module: ModuleId, action: PermissionAction) => boolean;
 
@@ -74,20 +75,10 @@ const MOCK_ROLES: Role[] = [
     },
     {
         id: 'role-user',
-        name: 'User',
-        description: 'Limited access. View/Create only.',
+        name: 'Customer',
+        description: 'Self-service customer portal - request quotations, book shipments, track cargo, view invoices. No access to the internal operations app.',
         isSystem: true,
-        permissions: {
-            dashboard: ['view'],
-            freight_sea: ['view', 'create'],
-            freight_air: ['view', 'create'],
-            freight_road: ['view', 'create'],
-            bl_management: ['view'],
-            customs_gd: ['view'],
-            import: ['view'],
-            export: ['view'],
-            tracking: ['view'],
-        } as any
+        permissions: {} as any
     },
     {
         id: 'role-shipping-agent',
@@ -125,9 +116,9 @@ const MOCK_ROLES: Role[] = [
         } as any
     },
     {
-        id: 'role-carrier-agent',
-        name: 'Carrier Agent',
-        description: 'Represents a carrier/shipping line - manages vessel schedules and transshipment.',
+        id: 'role-carrier',
+        name: 'Carrier',
+        description: 'Represents a carrier/shipping line, airline, or truck company - manages vessel/flight/truck schedules and transshipment.',
         isSystem: true,
         permissions: {
             dashboard: ['view'],
@@ -141,8 +132,8 @@ const MOCK_ROLES: Role[] = [
     },
     {
         id: 'role-terminal',
-        name: 'Terminal Operator',
-        description: 'Manages port/terminal handling, container yard, and customs examination coordination.',
+        name: 'Terminal',
+        description: 'Manages port/terminal handling, container yard, cargo receiving/dispatch, and customs examination coordination.',
         isSystem: true,
         permissions: {
             dashboard: ['view'],
@@ -188,17 +179,17 @@ const MOCK_USERS: User[] = [
     },
     {
         id: 'u3',
-        fullName: 'Standard User',
-        username: 'user',
-        email: 'user@logistics.com',
-        phone: '+92 300 0000003',
+        fullName: 'Nadeem Qureshi',
+        username: 'customer',
+        email: 'nadeem@alfalahtrading.pk',
+        phone: '+92 21 3456 7890',
         roleId: 'role-user',
         status: 'active',
         failedLoginAttempts: 0,
         requiresPasswordChange: false,
-        password: 'User@123',
-        department: 'Data Entry',
-        location: 'Lahore Office',
+        password: 'Customer@123',
+        department: 'Al-Falah Trading Co.',
+        location: 'Karachi',
     },
     {
         id: 'u4',
@@ -234,7 +225,7 @@ const MOCK_USERS: User[] = [
         username: 'carrier',
         email: 'carrier@logistics.com',
         phone: '+92 300 0000005',
-        roleId: 'role-carrier-agent',
+        roleId: 'role-carrier',
         status: 'active',
         failedLoginAttempts: 0,
         requiresPasswordChange: false,
@@ -311,6 +302,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
     };
 
+    const registerCustomer = (data: Omit<User, 'id' | 'roleId' | 'status' | 'failedLoginAttempts' | 'requiresPasswordChange'>) => {
+        if (users.some(u => u.username === data.username)) {
+            toast.error('That username is already taken');
+            return false;
+        }
+        const newUser: User = {
+            ...data,
+            id: Math.random().toString(36).substr(2, 9),
+            roleId: 'role-user',
+            status: 'active',
+            failedLoginAttempts: 0,
+            requiresPasswordChange: false,
+        };
+        setUsers(prev => [...prev, newUser]);
+        setCurrentUser(newUser);
+        logAction('Register', 'auth', `New customer registered: ${data.username}`);
+        return true;
+    };
+
     const logout = () => {
         logAction('Logout', 'auth', 'User logged out');
         setCurrentUser(null);
@@ -376,6 +386,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             roles,
             logs,
             login,
+            registerCustomer,
             logout,
             hasPermission,
             addUser,

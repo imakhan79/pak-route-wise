@@ -13,7 +13,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 
 export default function Login() {
-    const { login } = useAuth();
+    const { login, users, roles } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const from = (location.state as any)?.from?.pathname || '/';
@@ -39,7 +39,10 @@ export default function Login() {
                 toast.success("Login successful", {
                     description: `Welcome back, ${username}!`,
                 });
-                navigate(from, { replace: true });
+                const user = users.find(u => u.username === username);
+                const role = roles.find(r => r.id === user?.roleId);
+                const isCustomer = role?.name === 'Customer';
+                navigate(isCustomer ? '/portal' : from, { replace: true });
             } else {
                 setError('Invalid username or password. Please try again.');
                 toast.error("Login failed");
@@ -154,9 +157,6 @@ export default function Login() {
                             <Button variant="outline" size="sm" className="text-xs font-medium text-gray-700 dark:text-gray-200 border-gray-300" onClick={() => handleDemoFill('manager', 'Manager@123')}>
                                 Manager
                             </Button>
-                            <Button variant="outline" size="sm" className="text-xs font-medium text-gray-700 dark:text-gray-200 border-gray-300" onClick={() => handleDemoFill('user', 'User@123')}>
-                                User
-                            </Button>
                             <Button variant="outline" size="sm" className="text-xs font-medium text-gray-700 dark:text-gray-200 border-gray-300" onClick={() => handleDemoFill('agent', 'Agent@123')}>
                                 Shipping Agent
                             </Button>
@@ -164,14 +164,24 @@ export default function Login() {
                                 Clearing Agent
                             </Button>
                             <Button variant="outline" size="sm" className="text-xs font-medium text-gray-700 dark:text-gray-200 border-gray-300" onClick={() => handleDemoFill('carrier', 'Carrier@123')}>
-                                Carrier Agent
+                                Carrier
                             </Button>
-                            <Button variant="outline" size="sm" className="text-xs font-medium text-gray-700 dark:text-gray-200 border-gray-300 col-span-3" onClick={() => handleDemoFill('terminal', 'Terminal@123')}>
-                                Terminal Operator
+                            <Button variant="outline" size="sm" className="text-xs font-medium text-gray-700 dark:text-gray-200 border-gray-300" onClick={() => handleDemoFill('terminal', 'Terminal@123')}>
+                                Terminal
+                            </Button>
+                            <Button variant="outline" size="sm" className="text-xs font-medium text-gray-700 dark:text-gray-200 border-gray-300 col-span-3" onClick={() => handleDemoFill('customer', 'Customer@123')}>
+                                Customer (Portal)
                             </Button>
                         </div>
                     </CardFooter>
                 </Card>
+
+                <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+                    New customer?{' '}
+                    <a href="/portal/register" className="font-medium text-primary hover:underline">
+                        Create an account
+                    </a>
+                </div>
 
                 <div className="text-center text-xs text-gray-600 dark:text-gray-400 font-medium">
                     <p>© 2025 Zicon Technology. All rights reserved.</p>

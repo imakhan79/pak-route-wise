@@ -7,11 +7,32 @@ import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import Login from "./pages/Login";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { currentUser } = useAuth();
+  const { currentUser, roles } = useAuth();
   const location = useLocation();
 
   if (!currentUser) {
     return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  const role = roles.find(r => r.id === currentUser.roleId);
+  if (role?.name === 'Customer') {
+    return <Navigate to="/portal" replace />;
+  }
+
+  return <>{children}</>;
+}
+
+function PortalRoute({ children }: { children: React.ReactNode }) {
+  const { currentUser, roles } = useAuth();
+  const location = useLocation();
+
+  if (!currentUser) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  const role = roles.find(r => r.id === currentUser.roleId);
+  if (role?.name !== 'Customer') {
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;
@@ -75,6 +96,14 @@ import CourierManagement from "./pages/courier/CourierManagement";
 import GPSTracking from "./pages/tracking/GPSTracking";
 import DriverTracker from "./pages/tracking/DriverTracker";
 import Home from "./pages/marketing/Home";
+import Register from "./pages/portal/Register";
+import PortalDashboard from "./pages/portal/Dashboard";
+import MyShipments from "./pages/portal/MyShipments";
+import ShipmentDetail from "./pages/portal/ShipmentDetail";
+import RequestQuotation from "./pages/portal/RequestQuotation";
+import PortalInvoices from "./pages/portal/Invoices";
+import Support from "./pages/portal/Support";
+import Profile from "./pages/portal/Profile";
 
 
 
@@ -91,6 +120,14 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/track/:vehicleId" element={<DriverTracker />} />
+            <Route path="/portal/register" element={<Register />} />
+            <Route path="/portal" element={<PortalRoute><PortalDashboard /></PortalRoute>} />
+            <Route path="/portal/shipments" element={<PortalRoute><MyShipments /></PortalRoute>} />
+            <Route path="/portal/shipments/:id" element={<PortalRoute><ShipmentDetail /></PortalRoute>} />
+            <Route path="/portal/quotation" element={<PortalRoute><RequestQuotation /></PortalRoute>} />
+            <Route path="/portal/invoices" element={<PortalRoute><PortalInvoices /></PortalRoute>} />
+            <Route path="/portal/support" element={<PortalRoute><Support /></PortalRoute>} />
+            <Route path="/portal/profile" element={<PortalRoute><Profile /></PortalRoute>} />
 
             <Route path="/*" element={
               <ProtectedRoute>
