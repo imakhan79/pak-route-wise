@@ -13,6 +13,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Search, Plus, Truck, MoreVertical, Edit, Trash2, Wrench, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 import { useVehicles, Vehicle } from "@/hooks/useVehicles";
 import { VehicleDialog } from "@/components/fleet/VehicleDialog";
 import {
@@ -44,8 +45,7 @@ const Vehicles = () => {
 
     const filteredVehicles = vehicles.filter((v) =>
         v.registration_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        v.make.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        v.model.toLowerCase().includes(searchTerm.toLowerCase())
+        (v.type ?? '').toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const handleEdit = (vehicle: Vehicle) => {
@@ -70,9 +70,19 @@ const Vehicles = () => {
 
     const getStatusColor = (status: string) => {
         switch (status) {
-            case 'Active': return 'bg-green-500/10 text-green-500 hover:bg-green-500/20';
-            case 'Maintenance': return 'bg-orange-500/10 text-orange-500 hover:bg-orange-500/20';
+            case 'available': return 'bg-green-500/10 text-green-500 hover:bg-green-500/20';
+            case 'in_transit': return 'bg-blue-500/10 text-blue-500 hover:bg-blue-500/20';
+            case 'maintenance': return 'bg-orange-500/10 text-orange-500 hover:bg-orange-500/20';
             default: return 'bg-gray-500/10 text-gray-500 hover:bg-gray-500/20';
+        }
+    };
+
+    const getStatusLabel = (status: string) => {
+        switch (status) {
+            case 'available': return 'Available';
+            case 'in_transit': return 'In Transit';
+            case 'maintenance': return 'Maintenance';
+            default: return status;
         }
     };
 
@@ -100,11 +110,11 @@ const Vehicles = () => {
                 </Card>
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Active Vehicles</CardTitle>
+                        <CardTitle className="text-sm font-medium">Available Vehicles</CardTitle>
                         <div className="h-2 w-2 rounded-full bg-green-500" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{vehicles.filter(v => v.status === 'Active').length}</div>
+                        <div className="text-2xl font-bold">{vehicles.filter(v => v.status === 'available').length}</div>
                     </CardContent>
                 </Card>
                 <Card>
@@ -113,7 +123,7 @@ const Vehicles = () => {
                         <Wrench className="h-4 w-4 text-orange-500" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{vehicles.filter(v => v.status === 'Maintenance').length}</div>
+                        <div className="text-2xl font-bold">{vehicles.filter(v => v.status === 'maintenance').length}</div>
                     </CardContent>
                 </Card>
             </div>
@@ -126,7 +136,7 @@ const Vehicles = () => {
                             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
                             <Input
                                 type="search"
-                                placeholder="Search reg, make, model..."
+                                placeholder="Search reg, type..."
                                 className="pl-8"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -142,9 +152,10 @@ const Vehicles = () => {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Registration</TableHead>
-                                    <TableHead>Make / Model</TableHead>
-                                    <TableHead>Year</TableHead>
+                                    <TableHead>Type</TableHead>
                                     <TableHead>Capacity</TableHead>
+                                    <TableHead>Fitness Expiry</TableHead>
+                                    <TableHead>Insurance Expiry</TableHead>
                                     <TableHead>Status</TableHead>
                                     <TableHead className="text-right">Actions</TableHead>
                                 </TableRow>
@@ -152,7 +163,7 @@ const Vehicles = () => {
                             <TableBody>
                                 {filteredVehicles.length === 0 ? (
                                     <TableRow>
-                                        <TableCell colSpan={6} className="text-center h-24 text-muted-foreground">
+                                        <TableCell colSpan={7} className="text-center h-24 text-muted-foreground">
                                             No vehicles found.
                                         </TableCell>
                                     </TableRow>
@@ -160,12 +171,18 @@ const Vehicles = () => {
                                     filteredVehicles.map((vehicle) => (
                                         <TableRow key={vehicle.id}>
                                             <TableCell className="font-mono font-medium">{vehicle.registration_number}</TableCell>
-                                            <TableCell>{vehicle.make} {vehicle.model}</TableCell>
-                                            <TableCell>{vehicle.year}</TableCell>
-                                            <TableCell>{vehicle.capacity}</TableCell>
+                                            <TableCell>{vehicle.type || '—'}</TableCell>
+                                            <TableCell>
+                                                {vehicle.capacity_weight ? `${vehicle.capacity_weight}t` : ''}
+                                                {vehicle.capacity_weight && vehicle.capacity_volume ? ' / ' : ''}
+                                                {vehicle.capacity_volume ? `${vehicle.capacity_volume}m³` : ''}
+                                                {!vehicle.capacity_weight && !vehicle.capacity_volume ? '—' : ''}
+                                            </TableCell>
+                                            <TableCell>{vehicle.fitness_expiry ? format(new Date(vehicle.fitness_expiry), 'dd MMM yyyy') : '—'}</TableCell>
+                                            <TableCell>{vehicle.insurance_expiry ? format(new Date(vehicle.insurance_expiry), 'dd MMM yyyy') : '—'}</TableCell>
                                             <TableCell>
                                                 <Badge variant="outline" className={`${getStatusColor(vehicle.status)} border-0`}>
-                                                    {vehicle.status}
+                                                    {getStatusLabel(vehicle.status)}
                                                 </Badge>
                                             </TableCell>
                                             <TableCell className="text-right">

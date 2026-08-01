@@ -1,5 +1,4 @@
 import React from "react";
-import { useForm } from "react-hook-form";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,14 +21,19 @@ export function VehicleDialog({ open, onOpenChange, vehicle, onSave }: VehicleDi
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
 
+        const capacityWeight = formData.get("capacity_weight") as string;
+        const capacityVolume = formData.get("capacity_volume") as string;
+        const fitnessExpiry = formData.get("fitness_expiry") as string;
+        const insuranceExpiry = formData.get("insurance_expiry") as string;
+
         const newVehicle: Omit<Vehicle, 'id'> = {
             registration_number: formData.get("registration_number") as string,
-            make: formData.get("make") as string,
-            model: formData.get("model") as string,
-            year: parseInt(formData.get("year") as string) || new Date().getFullYear(),
-            capacity: formData.get("capacity") as string,
-            status: formData.get("status") as 'Active' | 'Inactive' | 'Maintenance',
-            driver_id: null, // Placeholder for now
+            type: (formData.get("type") as string) || null,
+            capacity_weight: capacityWeight ? parseFloat(capacityWeight) : null,
+            capacity_volume: capacityVolume ? parseFloat(capacityVolume) : null,
+            status: formData.get("status") as Vehicle['status'],
+            fitness_expiry: fitnessExpiry || null,
+            insurance_expiry: insuranceExpiry || null,
         };
 
         onSave(newVehicle);
@@ -55,62 +59,72 @@ export function VehicleDialog({ open, onOpenChange, vehicle, onSave }: VehicleDi
                             />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="year">Year</Label>
+                            <Label htmlFor="type">Type</Label>
                             <Input
-                                id="year"
-                                name="year"
-                                type="number"
-                                defaultValue={vehicle?.year}
-                                placeholder="2023"
-                                required
+                                id="type"
+                                name="type"
+                                defaultValue={vehicle?.type ?? ''}
+                                placeholder="Truck, Trailer..."
                             />
                         </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
                         <div className="grid gap-2">
-                            <Label htmlFor="make">Make</Label>
+                            <Label htmlFor="capacity_weight">Capacity (tons)</Label>
                             <Input
-                                id="make"
-                                name="make"
-                                defaultValue={vehicle?.make}
-                                placeholder="Hino, Volvo..."
-                                required
+                                id="capacity_weight"
+                                name="capacity_weight"
+                                type="number"
+                                step="0.01"
+                                defaultValue={vehicle?.capacity_weight ?? ''}
+                                placeholder="20"
                             />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="model">Model</Label>
+                            <Label htmlFor="capacity_volume">Capacity (m³)</Label>
                             <Input
-                                id="model"
-                                name="model"
-                                defaultValue={vehicle?.model}
-                                placeholder="Prime Mover..."
-                                required
+                                id="capacity_volume"
+                                name="capacity_volume"
+                                type="number"
+                                step="0.01"
+                                defaultValue={vehicle?.capacity_volume ?? ''}
+                                placeholder="40"
                             />
                         </div>
                     </div>
 
-                    <div className="grid gap-2">
-                        <Label htmlFor="capacity">Capacity / Type</Label>
-                        <Input
-                            id="capacity"
-                            name="capacity"
-                            defaultValue={vehicle?.capacity}
-                            placeholder="40ft Flatbed, 20 tons..."
-                            required
-                        />
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="grid gap-2">
+                            <Label htmlFor="fitness_expiry">Fitness Expiry</Label>
+                            <Input
+                                id="fitness_expiry"
+                                name="fitness_expiry"
+                                type="date"
+                                defaultValue={vehicle?.fitness_expiry ?? ''}
+                            />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="insurance_expiry">Insurance Expiry</Label>
+                            <Input
+                                id="insurance_expiry"
+                                name="insurance_expiry"
+                                type="date"
+                                defaultValue={vehicle?.insurance_expiry ?? ''}
+                            />
+                        </div>
                     </div>
 
                     <div className="grid gap-2">
                         <Label htmlFor="status">Status</Label>
-                        <Select name="status" defaultValue={vehicle?.status || "Active"}>
+                        <Select name="status" defaultValue={vehicle?.status || "available"}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select status" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="Active">Active</SelectItem>
-                                <SelectItem value="Inactive">Inactive</SelectItem>
-                                <SelectItem value="Maintenance">Maintenance</SelectItem>
+                                <SelectItem value="available">Available</SelectItem>
+                                <SelectItem value="in_transit">In Transit</SelectItem>
+                                <SelectItem value="maintenance">Maintenance</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>

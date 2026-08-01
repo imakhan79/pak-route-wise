@@ -6,12 +6,12 @@ import { toast } from 'sonner';
 export interface Vehicle {
     id: string;
     registration_number: string;
-    make: string;
-    model: string;
-    year: number;
-    capacity: string; // e.g., "20 tons"
-    status: 'Active' | 'Inactive' | 'Maintenance';
-    driver_id?: string | null;
+    type: string | null; // e.g., 'Truck', 'Trailer'
+    capacity_weight: number | null;
+    capacity_volume: number | null;
+    status: 'available' | 'in_transit' | 'maintenance';
+    fitness_expiry: string | null;
+    insurance_expiry: string | null;
     tracking_token?: string | null;
 }
 
