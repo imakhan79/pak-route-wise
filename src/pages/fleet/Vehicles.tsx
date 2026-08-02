@@ -195,7 +195,7 @@ const Vehicles = () => {
                                                         <DropdownMenuItem onClick={() => handleEdit(vehicle)}>
                                                             <Edit className="mr-2 h-4 w-4" /> Edit
                                                         </DropdownMenuItem>
-                                                        <DropdownMenuItem onClick={() => navigate(`/tracking/gps`)}>
+                                                        <DropdownMenuItem onClick={() => navigate(`/app/tracking/gps`)}>
                                                             <MapPin className="mr-2 h-4 w-4" /> View Live Location
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem onClick={() => copyTrackingLink(vehicle)}>

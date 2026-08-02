@@ -27,7 +27,7 @@ export function Navbar() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
-        <Link to="/home" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="Zicon Technology" className="h-9 w-auto drop-shadow-[0_0_12px_rgba(242,154,26,0.35)]" />
         </Link>
 

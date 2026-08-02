@@ -27,7 +27,7 @@ const stages = [
         icon: Ship,
         color: 'text-blue-500',
         bgColor: 'bg-blue-500/10',
-        path: '/documents/bl',
+        path: '/app/documents/bl',
         tasks: [
             { name: 'Input Invoice & Packing List', status: 'completed' },
             { name: 'Consignor & Consignee Details', status: 'completed' },
@@ -42,7 +42,7 @@ const stages = [
         icon: ClipboardCheck,
         color: 'text-orange-500',
         bgColor: 'bg-orange-500/10',
-        path: '/customs/gd',
+        path: '/app/customs/gd',
         tasks: [
             { name: 'Record B/L Details', status: 'in-progress' },
             { name: 'File Goods Declaration (GD)', status: 'pending' },
@@ -56,7 +56,7 @@ const stages = [
         icon: Truck,
         color: 'text-green-500',
         bgColor: 'bg-green-500/10',
-        path: '/atta/bonded-carriers',
+        path: '/app/atta/bonded-carriers',
         tasks: [
             { name: 'Produce Carrier Manifest', status: 'pending' },
             { name: 'Make Excise Payment (NBP)', status: 'pending' },
@@ -70,7 +70,7 @@ const stages = [
         icon: Package,
         color: 'text-purple-500',
         bgColor: 'bg-purple-500/10',
-        path: '/local/dispatch',
+        path: '/app/local/dispatch',
         tasks: [
             { name: 'Generate Gate Pass', status: 'pending' },
             { name: 'Final Arrangements of Loading', status: 'pending' },

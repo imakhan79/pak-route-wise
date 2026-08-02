@@ -112,7 +112,7 @@ export function DashboardShell({ roleName, children, title, subtitle }: Dashboar
                 </h4>
               )}
               {group.items.map((item) => (
-                <NavLink key={item.path} to={item.path} end={item.path === '/' || item.path === '/portal'}>
+                <NavLink key={item.path} to={item.path} end={item.path === '/app' || item.path === '/portal'}>
                   {({ isActive }) => (
                     <motion.div
                       whileHover={{ x: collapsed ? 0 : 3 }}

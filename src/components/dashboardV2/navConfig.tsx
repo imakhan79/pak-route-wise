@@ -20,173 +20,174 @@ export interface NavGroup {
 // Groups/items without a moduleId have no permission gate (mirrors legacy behavior
 // for modules that predate the ModuleId permission model).
 export const NAV_GROUPS: NavGroup[] = [
-  { title: '', items: [{ label: 'Dashboard', icon: LayoutDashboard, path: '/' }] },
+  { title: '', items: [{ label: 'Dashboard', icon: LayoutDashboard, path: '/app' }] },
   {
     title: 'Customers',
     items: [
-      { label: 'Customer Directory', icon: Building2, path: '/customers' },
+      { label: 'Customer Directory', icon: Building2, path: '/app/customers' },
+      { label: 'Vendors', icon: Truck, path: '/app/vendors' },
     ],
   },
   {
     title: 'Operations',
     items: [
-      { label: 'Operations Workflow', icon: Layers, path: '/operations/workflow' },
+      { label: 'Operations Workflow', icon: Layers, path: '/app/operations/workflow' },
     ],
   },
   {
     title: 'Freight',
     items: [
-      { label: 'Road Freight', icon: Truck, path: '/freight/road', moduleId: 'freight_road' },
-      { label: 'Sea Freight', icon: Ship, path: '/freight/sea', moduleId: 'freight_sea' },
-      { label: 'Air Freight', icon: Plane, path: '/freight/air', moduleId: 'freight_air' },
-      { label: 'Rail Freight', icon: Truck, path: '/freight/rail', moduleId: 'freight_rail' },
-      { label: 'Rate Calculator', icon: Truck, path: '/freight/calculator', moduleId: ['freight_road', 'freight_sea', 'freight_air', 'freight_rail'] },
+      { label: 'Road Freight', icon: Truck, path: '/app/freight/road', moduleId: 'freight_road' },
+      { label: 'Sea Freight', icon: Ship, path: '/app/freight/sea', moduleId: 'freight_sea' },
+      { label: 'Air Freight', icon: Plane, path: '/app/freight/air', moduleId: 'freight_air' },
+      { label: 'Rail Freight', icon: Truck, path: '/app/freight/rail', moduleId: 'freight_rail' },
+      { label: 'Rate Calculator', icon: Truck, path: '/app/freight/calculator', moduleId: ['freight_road', 'freight_sea', 'freight_air', 'freight_rail'] },
     ],
   },
   {
     title: 'Documents',
     items: [
-      { label: 'Bill of Lading', icon: FileText, path: '/documents/bl', moduleId: 'bl_management' },
-      { label: 'Packing List', icon: FileText, path: '/documents/packing-list', moduleId: 'bl_management' },
-      { label: 'Bilty / GR', icon: FileText, path: '/documents/bilty', moduleId: 'bl_management' },
-      { label: 'Air Waybill', icon: FileText, path: '/documents/awb', moduleId: 'bl_management' },
-      { label: 'Shipping Manifest', icon: FileText, path: '/documents/manifest', moduleId: 'bl_management' },
+      { label: 'Bill of Lading', icon: FileText, path: '/app/documents/bl', moduleId: 'bl_management' },
+      { label: 'Packing List', icon: FileText, path: '/app/documents/packing-list', moduleId: 'bl_management' },
+      { label: 'Bilty / GR', icon: FileText, path: '/app/documents/bilty', moduleId: 'bl_management' },
+      { label: 'Air Waybill', icon: FileText, path: '/app/documents/awb', moduleId: 'bl_management' },
+      { label: 'Shipping Manifest', icon: FileText, path: '/app/documents/manifest', moduleId: 'bl_management' },
     ],
   },
   {
     title: 'Customs (C&F)',
     items: [
-      { label: 'GD Filing', icon: ClipboardCheck, path: '/customs/gd', moduleId: 'customs_gd' },
-      { label: 'HS Code Lookup', icon: Package, path: '/customs/hs-codes', moduleId: 'customs_gd' },
-      { label: 'Duty Calculator', icon: DollarSign, path: '/customs/duty-calculator', moduleId: 'customs_gd' },
-      { label: 'Examination', icon: ClipboardCheck, path: '/customs/examination', moduleId: 'customs_gd' },
-      { label: 'Gate Pass', icon: ClipboardCheck, path: '/customs/gate-pass', moduleId: 'customs_gd' },
+      { label: 'GD Filing', icon: ClipboardCheck, path: '/app/customs/gd', moduleId: 'customs_gd' },
+      { label: 'HS Code Lookup', icon: Package, path: '/app/customs/hs-codes', moduleId: 'customs_gd' },
+      { label: 'Duty Calculator', icon: DollarSign, path: '/app/customs/duty-calculator', moduleId: 'customs_gd' },
+      { label: 'Examination', icon: ClipboardCheck, path: '/app/customs/examination', moduleId: 'customs_gd' },
+      { label: 'Gate Pass', icon: ClipboardCheck, path: '/app/customs/gate-pass', moduleId: 'customs_gd' },
     ],
   },
   {
     title: 'Imports',
     items: [
-      { label: 'Import Index', icon: Package, path: '/import/index', moduleId: 'import' },
-      { label: 'IGM Processing', icon: Package, path: '/import/igm', moduleId: 'import' },
-      { label: 'Duty Assessment', icon: DollarSign, path: '/import/duty', moduleId: 'import' },
-      { label: 'Release Orders', icon: FileText, path: '/import/release', moduleId: 'import' },
+      { label: 'Import Index', icon: Package, path: '/app/import/index', moduleId: 'import' },
+      { label: 'IGM Processing', icon: Package, path: '/app/import/igm', moduleId: 'import' },
+      { label: 'Duty Assessment', icon: DollarSign, path: '/app/import/duty', moduleId: 'import' },
+      { label: 'Release Orders', icon: FileText, path: '/app/import/release', moduleId: 'import' },
     ],
   },
   {
     title: 'Exports',
     items: [
-      { label: 'Export Filing', icon: Globe, path: '/export/filing', moduleId: 'export' },
-      { label: 'E-Form Processing', icon: Globe, path: '/export/e-form', moduleId: 'export' },
-      { label: 'Shipping Bills', icon: FileText, path: '/export/shipping-bills', moduleId: 'export' },
+      { label: 'Export Filing', icon: Globe, path: '/app/export/filing', moduleId: 'export' },
+      { label: 'E-Form Processing', icon: Globe, path: '/app/export/e-form', moduleId: 'export' },
+      { label: 'Shipping Bills', icon: FileText, path: '/app/export/shipping-bills', moduleId: 'export' },
     ],
   },
   {
     title: 'Transshipment',
     items: [
-      { label: 'TSR Filing', icon: ArrowRightLeft, path: '/transshipment/tsr', moduleId: 'transshipment' },
-      { label: 'Dry Port Transfer', icon: ArrowRightLeft, path: '/transshipment/dry-port', moduleId: 'transshipment' },
-      { label: 'Seal Verification', icon: ArrowRightLeft, path: '/transshipment/seal', moduleId: 'transshipment' },
+      { label: 'TSR Filing', icon: ArrowRightLeft, path: '/app/transshipment/tsr', moduleId: 'transshipment' },
+      { label: 'Dry Port Transfer', icon: ArrowRightLeft, path: '/app/transshipment/dry-port', moduleId: 'transshipment' },
+      { label: 'Seal Verification', icon: ArrowRightLeft, path: '/app/transshipment/seal', moduleId: 'transshipment' },
     ],
   },
   {
     title: 'Afghan Transit',
     items: [
-      { label: 'ATTA Management', icon: MapPin, path: '/atta/management', moduleId: 'afghan_transit' },
-      { label: 'Transit Pass', icon: MapPin, path: '/atta/transit-pass', moduleId: 'afghan_transit' },
-      { label: 'Border Clearance', icon: MapPin, path: '/atta/border-clearance', moduleId: 'afghan_transit' },
-      { label: 'Bonded Carriers', icon: MapPin, path: '/atta/bonded-carriers', moduleId: 'afghan_transit' },
+      { label: 'ATTA Management', icon: MapPin, path: '/app/atta/management', moduleId: 'afghan_transit' },
+      { label: 'Transit Pass', icon: MapPin, path: '/app/atta/transit-pass', moduleId: 'afghan_transit' },
+      { label: 'Border Clearance', icon: MapPin, path: '/app/atta/border-clearance', moduleId: 'afghan_transit' },
+      { label: 'Bonded Carriers', icon: MapPin, path: '/app/atta/bonded-carriers', moduleId: 'afghan_transit' },
     ],
   },
   {
     title: 'Local Logistics',
     items: [
-      { label: 'Dispatch', icon: Box, path: '/local/dispatch' },
-      { label: 'Route Planning', icon: Box, path: '/local/routes' },
-      { label: 'POD Management', icon: Box, path: '/local/pod' },
+      { label: 'Dispatch', icon: Box, path: '/app/local/dispatch' },
+      { label: 'Route Planning', icon: Box, path: '/app/local/routes' },
+      { label: 'POD Management', icon: Box, path: '/app/local/pod' },
     ],
   },
   {
     title: 'Maritime Operations',
     items: [
-      { label: 'Container Tracking', icon: Anchor, path: '/maritime/containers' },
-      { label: 'Vessel Schedule', icon: Ship, path: '/maritime/vessels' },
-      { label: 'Port Directory', icon: Anchor, path: '/maritime/ports' },
+      { label: 'Container Tracking', icon: Anchor, path: '/app/maritime/containers' },
+      { label: 'Vessel Schedule', icon: Ship, path: '/app/maritime/vessels' },
+      { label: 'Port Directory', icon: Anchor, path: '/app/maritime/ports' },
     ],
   },
   {
     title: 'Air Cargo',
     items: [
-      { label: 'AWB Management', icon: Plane, path: '/air-cargo/awb' },
-      { label: 'Cargo Handling', icon: Plane, path: '/air-cargo/handling' },
-      { label: 'Airlines', icon: Plane, path: '/air-cargo/airlines' },
+      { label: 'AWB Management', icon: Plane, path: '/app/air-cargo/awb' },
+      { label: 'Cargo Handling', icon: Plane, path: '/app/air-cargo/handling' },
+      { label: 'Airlines', icon: Plane, path: '/app/air-cargo/airlines' },
     ],
   },
   {
     title: 'Courier Service',
     items: [
-      { label: 'Shipment Booking', icon: Truck, path: '/courier/booking' },
-      { label: 'Live Tracking', icon: Truck, path: '/courier/tracking' },
-      { label: 'Courier Management', icon: Truck, path: '/courier/management' },
+      { label: 'Shipment Booking', icon: Truck, path: '/app/courier/booking' },
+      { label: 'Live Tracking', icon: Truck, path: '/app/courier/tracking' },
+      { label: 'Courier Management', icon: Truck, path: '/app/courier/management' },
     ],
   },
   {
     title: 'Warehousing',
     items: [
-      { label: 'Inventory', icon: Warehouse, path: '/warehouse/inventory', moduleId: 'warehousing' },
-      { label: 'GRN / GIN', icon: Warehouse, path: '/warehouse/grn', moduleId: 'warehousing' },
-      { label: 'Bonded Warehouse', icon: Warehouse, path: '/warehouse/bonded', moduleId: 'warehousing' },
+      { label: 'Inventory', icon: Warehouse, path: '/app/warehouse/inventory', moduleId: 'warehousing' },
+      { label: 'GRN / GIN', icon: Warehouse, path: '/app/warehouse/grn', moduleId: 'warehousing' },
+      { label: 'Bonded Warehouse', icon: Warehouse, path: '/app/warehouse/bonded', moduleId: 'warehousing' },
     ],
   },
   {
     title: 'Asset Management',
     items: [
-      { label: 'Vehicles', icon: Truck, path: '/fleet/vehicles' },
-      { label: 'Drivers', icon: Users, path: '/fleet/drivers' },
+      { label: 'Vehicles', icon: Truck, path: '/app/fleet/vehicles' },
+      { label: 'Drivers', icon: Users, path: '/app/fleet/drivers' },
     ],
   },
   {
     title: 'Finance & Accounts',
     items: [
-      { label: 'Invoices', icon: DollarSign, path: '/finance/invoices', moduleId: 'finance' },
-      { label: 'Duty Payments', icon: DollarSign, path: '/finance/duties', moduleId: 'finance' },
-      { label: 'Demurrage', icon: DollarSign, path: '/finance/demurrage', moduleId: 'finance' },
-      { label: 'Financial Reports', icon: BarChart3, path: '/finance/reports', moduleId: 'finance' },
+      { label: 'Invoices', icon: DollarSign, path: '/app/finance/invoices', moduleId: 'finance' },
+      { label: 'Duty Payments', icon: DollarSign, path: '/app/finance/duties', moduleId: 'finance' },
+      { label: 'Demurrage', icon: DollarSign, path: '/app/finance/demurrage', moduleId: 'finance' },
+      { label: 'Financial Reports', icon: BarChart3, path: '/app/finance/reports', moduleId: 'finance' },
     ],
   },
   {
     title: 'HR & Payroll',
     items: [
-      { label: 'Employees', icon: Users, path: '/hr/employees' },
-      { label: 'Payroll', icon: Users, path: '/hr/payroll' },
+      { label: 'Employees', icon: Users, path: '/app/hr/employees' },
+      { label: 'Payroll', icon: Users, path: '/app/hr/payroll' },
     ],
   },
   {
     title: 'Compliance',
     items: [
-      { label: 'Documents', icon: Shield, path: '/compliance/documents' },
-      { label: 'Customs Rules', icon: Shield, path: '/compliance/rules' },
-      { label: 'Audit Trail', icon: Shield, path: '/compliance/audit' },
+      { label: 'Documents', icon: Shield, path: '/app/compliance/documents' },
+      { label: 'Customs Rules', icon: Shield, path: '/app/compliance/rules' },
+      { label: 'Audit Trail', icon: Shield, path: '/app/compliance/audit' },
     ],
   },
   {
     title: 'Tracking & Visibility',
     items: [
-      { label: 'GPS Tracking', icon: MapPin, path: '/tracking/gps', moduleId: 'tracking' },
-      { label: 'Container Track', icon: MapPin, path: '/tracking/containers', moduleId: 'tracking' },
-      { label: 'Milestones', icon: MapPin, path: '/tracking/milestones', moduleId: 'tracking' },
-      { label: 'Alerts', icon: MapPin, path: '/tracking/alerts', moduleId: 'tracking' },
+      { label: 'GPS Tracking', icon: MapPin, path: '/app/tracking/gps', moduleId: 'tracking' },
+      { label: 'Container Track', icon: MapPin, path: '/app/tracking/containers', moduleId: 'tracking' },
+      { label: 'Milestones', icon: MapPin, path: '/app/tracking/milestones', moduleId: 'tracking' },
+      { label: 'Alerts', icon: MapPin, path: '/app/tracking/alerts', moduleId: 'tracking' },
     ],
   },
   {
     title: 'Reports',
     items: [
-      { label: 'Reports & Analytics', icon: BarChart3, path: '/reports', moduleId: 'reports' },
+      { label: 'Reports & Analytics', icon: BarChart3, path: '/app/reports', moduleId: 'reports' },
     ],
   },
   {
     title: 'System',
     items: [
-      { label: 'Global Settings', icon: Settings, path: '/settings', moduleId: 'settings' },
+      { label: 'Global Settings', icon: Settings, path: '/app/settings', moduleId: 'settings' },
     ],
   },
 ];

@@ -32,7 +32,7 @@ function PortalRoute({ children }: { children: React.ReactNode }) {
 
   const role = roles.find(r => r.id === currentUser.roleId);
   if (role?.name !== 'Customer') {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/app" replace />;
   }
 
   return <>{children}</>;
@@ -40,6 +40,7 @@ function PortalRoute({ children }: { children: React.ReactNode }) {
 
 import DashboardRouter from "./pages/dashboards/DashboardRouter";
 import CustomerDirectory from "./pages/customers/CustomerDirectory";
+import VendorDirectory from "./pages/vendors/VendorDirectory";
 import RoadFreight from "./pages/freight/RoadFreight";
 import SeaFreight from "./pages/freight/SeaFreight";
 import AirFreight from "./pages/freight/AirFreight";
@@ -121,8 +122,9 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/home" element={<Navigate to="/" replace />} />
             <Route path="/track/:vehicleId" element={<DriverTracker />} />
             <Route path="/portal/register" element={<Register />} />
             <Route path="/portal/confirm" element={<ConfirmEmail />} />
@@ -134,11 +136,12 @@ const App = () => (
             <Route path="/portal/support" element={<PortalRoute><Support /></PortalRoute>} />
             <Route path="/portal/profile" element={<PortalRoute><Profile /></PortalRoute>} />
 
-            <Route path="/*" element={
+            <Route path="/app/*" element={
               <ProtectedRoute>
                 <Routes>
                   <Route path="/" element={<DashboardRouter />} />
                   <Route path="/customers" element={<CustomerDirectory />} />
+                  <Route path="/vendors" element={<VendorDirectory />} />
 
                   {/* Freight Management */}
                   <Route path="/freight/road" element={<RoadFreight />} />
@@ -245,6 +248,7 @@ const App = () => (
                 </Routes>
               </ProtectedRoute>
             } />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

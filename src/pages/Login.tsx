@@ -47,7 +47,7 @@ export default function Login() {
   const { login, users, roles, bridgeSupabaseUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = (location.state as any)?.from?.pathname || '/';
+  const from = (location.state as any)?.from?.pathname || '/app';
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
