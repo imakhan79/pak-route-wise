@@ -44,7 +44,7 @@ export interface FreightFilters {
 const mapToFreightShipment = (row: any): FreightShipment => ({
   id: row.id,
   reference: row.shipment_id,
-  mode: 'road', // Defaulting to road
+  mode: (row.mode as TransportMode) || 'road',
   origin: row.origin,
   destination: row.destination,
   carrier: 'N/A',
@@ -85,6 +85,7 @@ export function useFreightShipments(mode: TransportMode) {
       const { data, error } = await supabase
         .from('shipments')
         .select('*')
+        .eq('mode', mode)
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -137,6 +138,7 @@ export function useFreightShipments(mode: TransportMode) {
         .from('shipments')
         .insert({
           shipment_id: newShipment.reference,
+          mode: newShipment.mode || mode,
           origin: newShipment.origin,
           destination: newShipment.destination,
           status: newShipment.status,
