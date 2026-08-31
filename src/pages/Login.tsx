@@ -307,10 +307,10 @@ export default function Login() {
           {/* Footer */}
           <div className="space-y-2 text-center text-[11px] text-muted-foreground">
             <div className="flex flex-wrap justify-center gap-3">
-              <a href="#" className="hover:text-primary hover:underline">Privacy Policy</a>
-              <a href="#" className="hover:text-primary hover:underline">Terms &amp; Conditions</a>
-              <a href="#" className="hover:text-primary hover:underline">Support</a>
-              <a href="#" className="hover:text-primary hover:underline">Documentation</a>
+              <button type="button" onClick={() => toast.info('Privacy Policy coming soon')} className="hover:text-primary hover:underline">Privacy Policy</button>
+              <button type="button" onClick={() => toast.info('Terms & Conditions coming soon')} className="hover:text-primary hover:underline">Terms &amp; Conditions</button>
+              <button type="button" onClick={() => toast.info('Please contact IT Support for assistance.')} className="hover:text-primary hover:underline">Support</button>
+              <button type="button" onClick={() => toast.info('Documentation coming soon')} className="hover:text-primary hover:underline">Documentation</button>
             </div>
             <p>
               v1.0.0 · © {new Date().getFullYear()} Zicon Technology. All rights reserved. · Powered by{' '}

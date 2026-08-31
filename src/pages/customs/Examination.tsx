@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -100,8 +101,7 @@ export default function Examination() {
     };
 
     const handleUpdateStatus = (inspectionCase: InspectionCase) => {
-        console.log('Update status:', inspectionCase.case_number);
-        // TODO: Open status update dialog
+        toast.info(`Status update for ${inspectionCase.case_number} coming soon`);
     };
 
     const handleAddEvidence = (inspectionCase: InspectionCase) => {
@@ -158,7 +158,7 @@ export default function Examination() {
                             <FileText className="h-4 w-4 mr-2 text-red-600" />
                             Export PDF
                         </Button>
-                        <Button variant="outline" onClick={() => console.log('Export Excel')}>
+                        <Button variant="outline" onClick={() => toast.info('Excel export coming soon')}>
                             <FileSpreadsheet className="h-4 w-4 mr-2 text-green-600" />
                             Export Excel
                         </Button>
