@@ -1,15 +1,27 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logo from '@/assets/zicon-logo.png';
 import { MagneticButton } from './MagneticButton';
 
-const NAV_LINKS = ['Products', 'Solutions', 'Industries', 'Resources', 'Pricing'];
+const NAV_LINKS: { label: string; id: string }[] = [
+  { label: 'Products', id: 'features' },
+  { label: 'Solutions', id: 'why-us' },
+  { label: 'Industries', id: 'coverage' },
+  { label: 'Resources', id: 'platform-tour' },
+  { label: 'Pricing', id: 'cta' },
+];
 
 export function Navbar() {
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const scrollToSection = (id: string) => {
+    setMobileOpen(false);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -33,14 +45,15 @@ export function Navbar() {
 
         <nav className="hidden items-center gap-9 md:flex">
           {NAV_LINKS.map((link) => (
-            <a
-              key={link}
-              href="#"
+            <button
+              key={link.label}
+              type="button"
+              onClick={() => scrollToSection(link.id)}
               className="group relative text-sm font-medium text-white/80 transition-colors hover:text-white"
             >
-              {link}
+              {link.label}
               <span className="absolute -bottom-1 left-0 h-px w-0 bg-gradient-to-r from-[hsl(36,89%,53%)] to-[hsl(1,58%,45%)] transition-all duration-300 group-hover:w-full" />
-            </a>
+            </button>
           ))}
         </nav>
 
@@ -48,7 +61,7 @@ export function Navbar() {
           <Link to="/login" className="text-sm font-medium text-white/80 transition-colors hover:text-white">
             Login
           </Link>
-          <MagneticButton variant="secondary" className="!px-6 !py-2.5 !text-xs">
+          <MagneticButton variant="secondary" className="!px-6 !py-2.5 !text-xs" onClick={() => navigate('/login')}>
             Get Started
           </MagneticButton>
         </div>
@@ -73,14 +86,19 @@ export function Navbar() {
           >
             <div className="flex flex-col gap-4 px-6 py-6">
               {NAV_LINKS.map((link) => (
-                <a key={link} href="#" className="text-sm font-medium text-white/80">
-                  {link}
-                </a>
+                <button
+                  key={link.label}
+                  type="button"
+                  onClick={() => scrollToSection(link.id)}
+                  className="text-left text-sm font-medium text-white/80"
+                >
+                  {link.label}
+                </button>
               ))}
               <Link to="/login" className="text-sm font-medium text-white/80">
                 Login
               </Link>
-              <MagneticButton variant="secondary" className="!px-6 !py-2.5 !text-xs w-fit">
+              <MagneticButton variant="secondary" className="!px-6 !py-2.5 !text-xs w-fit" onClick={() => navigate('/login')}>
                 Get Started
               </MagneticButton>
             </div>

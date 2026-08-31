@@ -37,7 +37,7 @@ export function DashboardPreview() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[hsl(1,20%,10%)] py-28">
+    <section id="platform-tour" className="relative overflow-hidden bg-[hsl(1,20%,10%)] py-28">
       <div className="mx-auto max-w-7xl px-6">
         <Reveal className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold text-white sm:text-4xl">See your entire operation, live.</h2>

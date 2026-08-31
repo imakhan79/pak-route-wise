@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Reveal } from './Reveal';
 import { MagneticButton } from './MagneticButton';
 
 export function CTASection() {
+  const navigate = useNavigate();
   return (
-    <section className="relative overflow-hidden bg-[hsl(1,20%,8%)] py-28">
+    <section id="cta" className="relative overflow-hidden bg-[hsl(1,20%,8%)] py-28">
       <motion.div
         className="absolute inset-0"
         style={{
@@ -22,8 +24,8 @@ export function CTASection() {
             Join enterprise logistics teams running their entire operation on Zicon Technology.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <MagneticButton variant="secondary">Schedule Demo</MagneticButton>
-            <MagneticButton variant="ghost">Start Free Trial</MagneticButton>
+            <MagneticButton variant="secondary" onClick={() => navigate('/portal/register')}>Schedule Demo</MagneticButton>
+            <MagneticButton variant="ghost" onClick={() => navigate('/login')}>Start Free Trial</MagneticButton>
           </div>
         </Reveal>
       </div>

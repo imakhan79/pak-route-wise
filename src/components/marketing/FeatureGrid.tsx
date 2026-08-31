@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import {
   Truck,
   Warehouse,
@@ -31,8 +32,9 @@ const FEATURES = [
 ];
 
 export function FeatureGrid() {
+  const navigate = useNavigate();
   return (
-    <section className="relative bg-[hsl(1,20%,8%)] py-28">
+    <section id="features" className="relative bg-[hsl(1,20%,8%)] py-28">
       <div className="mx-auto max-w-7xl px-6">
         <Reveal className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold text-white sm:text-4xl">One platform. Every operation.</h2>
@@ -45,9 +47,14 @@ export function FeatureGrid() {
           {FEATURES.map(({ icon: Icon, title, desc }, i) => (
             <Reveal key={title} delay={(i % 3) * 0.08}>
               <motion.div
+                role="button"
+                tabIndex={0}
+                onClick={() => navigate('/login')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') navigate('/login'); }}
                 whileHover={{ y: -8, rotate: -0.6, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-                className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-colors duration-300 hover:border-[hsl(36,89%,53%)]/40"
+                className="group relative h-full cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-colors duration-300 hover:border-[hsl(36,89%,53%)]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(36,89%,53%)]"
               >
                 <div
                   className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"

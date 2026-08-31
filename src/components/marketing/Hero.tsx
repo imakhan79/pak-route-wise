@@ -1,4 +1,5 @@
 import { useRef, MouseEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Truck, Ship, Plane, Package, PlayCircle, ArrowRight } from 'lucide-react';
 import { AnimatedBackground } from './AnimatedBackground';
@@ -12,6 +13,7 @@ const FLOATING_ICONS = [
 ];
 
 export function Hero() {
+  const navigate = useNavigate();
   const ref = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -86,13 +88,16 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-10 flex flex-wrap items-center gap-4"
           >
-            <MagneticButton variant="secondary">
+            <MagneticButton variant="secondary" onClick={() => navigate('/login')}>
               <span className="flex items-center gap-2">
                 Get Started <ArrowRight className="h-4 w-4" />
               </span>
             </MagneticButton>
-            <MagneticButton variant="primary">Book Live Demo</MagneticButton>
-            <MagneticButton variant="ghost">
+            <MagneticButton variant="primary" onClick={() => navigate('/portal/register')}>Book Live Demo</MagneticButton>
+            <MagneticButton
+              variant="ghost"
+              onClick={() => document.getElementById('platform-tour')?.scrollIntoView({ behavior: 'smooth' })}
+            >
               <span className="flex items-center gap-2">
                 <PlayCircle className="h-4 w-4" /> Watch Platform Tour
               </span>

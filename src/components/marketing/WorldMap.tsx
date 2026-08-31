@@ -35,7 +35,7 @@ function portIcon() {
 
 export function WorldMap() {
   return (
-    <section className="relative bg-[hsl(1,20%,8%)] py-28">
+    <section id="coverage" className="relative bg-[hsl(1,20%,8%)] py-28">
       <div className="mx-auto max-w-7xl px-6">
         <Reveal className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold text-white sm:text-4xl">A network spanning the globe.</h2>
