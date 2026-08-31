@@ -104,6 +104,7 @@ export function AddEvidenceDialog({ open, onOpenChange, caseNumber }: AddEvidenc
                                                 size="icon"
                                                 className="h-8 w-8 flex-shrink-0"
                                                 onClick={() => handleRemoveFile(index)}
+                                                aria-label="Remove file"
                                             >
                                                 <X className="h-4 w-4" />
                                             </Button>

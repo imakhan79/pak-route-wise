@@ -264,12 +264,12 @@ export default function Bilty() {
                     </td>
                     <td>
                       <div className="flex items-center justify-end gap-1">
-                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setEditDocument(doc)}>
+                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setEditDocument(doc)} aria-label="Edit document">
                           <Edit className="h-4 w-4" />
                         </Button>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="More options">
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>

@@ -288,7 +288,7 @@ export default function BillOfLading() {
                   </Button>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-9 w-9" data-testid="bl-menu-trigger">
+                      <Button variant="ghost" size="icon" className="h-9 w-9" data-testid="bl-menu-trigger" aria-label="More options">
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>

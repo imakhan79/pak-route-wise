@@ -102,7 +102,7 @@ export function ManifestPrintView({ document, open, onOpenChange }: ManifestPrin
                         <Printer className="h-4 w-4" />
                         Print
                     </Button>
-                    <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)} className="text-white hover:bg-white/20">
+                    <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)} className="text-white hover:bg-white/20" aria-label="Close">
                         <X className="h-6 w-6" />
                     </Button>
                 </div>

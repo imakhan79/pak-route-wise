@@ -303,10 +303,10 @@ export default function ReleaseOrders() {
                               Delivered
                             </Button>
                           )}
-                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleView(imp)}>
+                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleView(imp)} aria-label="View details">
                             <Eye className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleCopyRef(imp.gdNumber || '')}>
+                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleCopyRef(imp.gdNumber || '')} aria-label="Copy reference">
                             <Copy className="h-4 w-4" />
                           </Button>
                         </div>

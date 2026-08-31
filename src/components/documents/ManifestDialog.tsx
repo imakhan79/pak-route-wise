@@ -244,7 +244,7 @@ export function ManifestDialog({
                                                 />
                                             </td>
                                             <td className="p-2">
-                                                <Button type="button" variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => handleRemoveItem(index)}>
+                                                <Button type="button" variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => handleRemoveItem(index)} aria-label="Remove item">
                                                     <Trash2 className="h-4 w-4" />
                                                 </Button>
                                             </td>

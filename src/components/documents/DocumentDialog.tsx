@@ -427,7 +427,7 @@ export function DocumentDialog({
                     placeholder="Add Notify Party"
                     onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddNotifyParty())}
                   />
-                  <Button type="button" variant="outline" size="icon" onClick={handleAddNotifyParty}>
+                  <Button type="button" variant="outline" size="icon" onClick={handleAddNotifyParty} aria-label="Add notify party">
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
@@ -481,7 +481,7 @@ export function DocumentDialog({
                     placeholder="e.g. MSCU1234567"
                     onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddContainer())}
                   />
-                  <Button type="button" variant="outline" size="icon" onClick={handleAddContainer}>
+                  <Button type="button" variant="outline" size="icon" onClick={handleAddContainer} aria-label="Add container">
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>

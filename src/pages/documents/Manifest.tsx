@@ -171,12 +171,12 @@ export default function Manifest() {
                                         </td>
                                         <td className="p-4 text-right">
                                             <div className="flex justify-end gap-2">
-                                                <Button variant="ghost" size="icon" onClick={() => setEditDocument(doc)} className="h-8 w-8">
+                                                <Button variant="ghost" size="icon" onClick={() => setEditDocument(doc)} className="h-8 w-8" aria-label="Edit document">
                                                     <Edit className="h-4 w-4" />
                                                 </Button>
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
-                                                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                                                        <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="More options">
                                                             <MoreHorizontal className="h-4 w-4" />
                                                         </Button>
                                                     </DropdownMenuTrigger>

@@ -157,6 +157,7 @@ export function FreightTable({ shipments, onView, onEdit, onDelete, onPrint }: F
                           size="icon"
                           className="h-8 w-8"
                           onClick={() => onView(shipment)}
+                          aria-label="View shipment"
                         >
                           <Eye className="h-4 w-4" />
                         </Button>
@@ -165,12 +166,13 @@ export function FreightTable({ shipments, onView, onEdit, onDelete, onPrint }: F
                           size="icon"
                           className="h-8 w-8"
                           onClick={() => onEdit(shipment)}
+                          aria-label="Edit shipment"
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="More options">
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>

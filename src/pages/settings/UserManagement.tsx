@@ -128,10 +128,10 @@ export default function UserManagement() {
                                         </TableCell>
                                         <TableCell className="text-right">
                                             <div className="flex justify-end gap-2">
-                                                <Button variant="ghost" size="icon" onClick={() => handleEdit(user)}>
+                                                <Button variant="ghost" size="icon" onClick={() => handleEdit(user)} aria-label="Edit user">
                                                     <Edit className="h-4 w-4" />
                                                 </Button>
-                                                <Button variant="ghost" size="icon" className="text-destructive" onClick={() => handleDelete(user.id)}>
+                                                <Button variant="ghost" size="icon" className="text-destructive" onClick={() => handleDelete(user.id)} aria-label="Delete user">
                                                     <Trash2 className="h-4 w-4" />
                                                 </Button>
                                             </div>

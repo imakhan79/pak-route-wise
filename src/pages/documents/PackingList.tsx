@@ -305,7 +305,7 @@ export default function PackingList() {
                                     </Button>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
-                                            <Button variant="ghost" size="icon" className="h-9 w-9">
+                                            <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="More options">
                                                 <MoreHorizontal className="h-4 w-4" />
                                             </Button>
                                         </DropdownMenuTrigger>

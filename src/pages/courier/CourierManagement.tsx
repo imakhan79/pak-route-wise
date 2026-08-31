@@ -225,7 +225,7 @@ export default function CourierManagement() {
                                             <TableCell className="text-right pr-6">
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
-                                                        <Button variant="ghost" size="icon" className="h-9 w-9 hover:bg-muted-foreground/10 rounded-xl">
+                                                        <Button variant="ghost" size="icon" className="h-9 w-9 hover:bg-muted-foreground/10 rounded-xl" aria-label="More options">
                                                             <MoreHorizontal className="h-5 w-5" />
                                                         </Button>
                                                     </DropdownMenuTrigger>

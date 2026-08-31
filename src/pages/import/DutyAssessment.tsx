@@ -301,7 +301,7 @@ export default function DutyAssessment() {
                                                             Assess
                                                         </Button>
                                                     )}
-                                                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={(e) => handleView(imp, e)}>
+                                                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={(e) => handleView(imp, e)} aria-label="View details">
                                                         <Eye className="h-4 w-4" />
                                                     </Button>
                                                 </div>

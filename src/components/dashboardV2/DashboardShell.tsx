@@ -152,12 +152,13 @@ export function DashboardShell({ roleName, children, title, subtitle }: Dashboar
               </div>
             )}
             {!collapsed && (
-              <button onClick={() => { logout(); navigate('/login'); }} className="text-muted-foreground hover:text-destructive">
+              <button aria-label="Log out" onClick={() => { logout(); navigate('/login'); }} className="text-muted-foreground hover:text-destructive">
                 <LogOut className="h-4 w-4" />
               </button>
             )}
           </div>
           <button
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             onClick={() => setCollapsed((c) => !c)}
             className="mt-2 flex w-full items-center justify-center rounded-xl border border-black/5 py-1.5 text-muted-foreground hover:bg-black/[0.03]"
           >
@@ -196,21 +197,21 @@ export function DashboardShell({ roleName, children, title, subtitle }: Dashboar
               <option>Islamabad Branch</option>
             </select>
 
-            <button className="rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]"><Globe className="h-4 w-4" /></button>
-            <button onClick={toggleDark} className="rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]">
+            <button aria-label="Change language" className="rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]"><Globe className="h-4 w-4" /></button>
+            <button aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'} onClick={toggleDark} className="rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]">
               {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
-            <button onClick={toggleFullscreen} className="rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]"><Maximize className="h-4 w-4" /></button>
-            <button className="relative rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]"><MessageSquare className="h-4 w-4" /></button>
-            <button className="relative rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]"><CheckSquare className="h-4 w-4" /></button>
-            <button className="relative rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]"><CalendarIcon className="h-4 w-4" /></button>
-            <button onClick={() => setNotifOpen(true)} className="relative rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]">
+            <button aria-label="Toggle fullscreen" onClick={toggleFullscreen} className="rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]"><Maximize className="h-4 w-4" /></button>
+            <button aria-label="Messages" className="relative rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]"><MessageSquare className="h-4 w-4" /></button>
+            <button aria-label="Tasks" className="relative rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]"><CheckSquare className="h-4 w-4" /></button>
+            <button aria-label="Calendar" className="relative rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]"><CalendarIcon className="h-4 w-4" /></button>
+            <button aria-label="Notifications" onClick={() => setNotifOpen(true)} className="relative rounded-lg p-2 text-muted-foreground hover:bg-black/[0.04]">
               <Bell className="h-4 w-4" />
               <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[9px] font-bold text-white">5</span>
             </button>
 
             <div className="relative">
-              <button onClick={() => setProfileOpen((o) => !o)} className="flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold text-white" style={{ background: 'var(--gradient-primary)' }}>
+              <button aria-label="Open profile menu" aria-expanded={profileOpen} onClick={() => setProfileOpen((o) => !o)} className="flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold text-white" style={{ background: 'var(--gradient-primary)' }}>
                 {currentUser?.fullName?.[0] || 'U'}
               </button>
               <AnimatePresence>

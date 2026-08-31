@@ -266,10 +266,10 @@ export default function IGMManagement() {
                               File IGM
                             </Button>
                           )}
-                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleView(imp)}>
+                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleView(imp)} aria-label="View details">
                             <Eye className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleCopyRef(imp.blNumber)}>
+                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleCopyRef(imp.blNumber)} aria-label="Copy reference">
                             <Copy className="h-4 w-4" />
                           </Button>
                         </div>
