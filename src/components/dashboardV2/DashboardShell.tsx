@@ -1,7 +1,8 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
+import { pageTransition } from '@/lib/motion';
 import logo from '@/assets/zicon-logo.png';
 import {
   LayoutDashboard, Search, Bell, MessageSquare, CheckSquare, Calendar as CalendarIcon,
@@ -50,6 +51,7 @@ export function DashboardShell({ roleName, children, title, subtitle }: Dashboar
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const now = useClock();
+  const location = useLocation();
 
   const navGroups = roleName === 'Customer' ? CUSTOMER_NAV : filterNavGroups(hasPermission);
 
@@ -241,7 +243,17 @@ export function DashboardShell({ roleName, children, title, subtitle }: Dashboar
               {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
             </div>
           )}
-          {children}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname}
+              variants={pageTransition}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              {children}
+            </motion.div>
+          </AnimatePresence>
         </main>
       </div>
 

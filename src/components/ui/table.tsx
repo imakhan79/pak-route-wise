@@ -1,6 +1,8 @@
 import * as React from "react";
+import { motion, type HTMLMotionProps } from "framer-motion";
 
 import { cn } from "@/lib/utils";
+import { fadeIn } from "@/lib/motion";
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
   ({ className, ...props }, ref) => (
@@ -30,11 +32,14 @@ const TableFooter = React.forwardRef<HTMLTableSectionElement, React.HTMLAttribut
 );
 TableFooter.displayName = "TableFooter";
 
-const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
+const TableRow = React.forwardRef<HTMLTableRowElement, HTMLMotionProps<"tr">>(
   ({ className, ...props }, ref) => (
-    <tr
+    <motion.tr
       ref={ref}
       className={cn("border-b transition-colors data-[state=selected]:bg-muted hover:bg-muted/50", className)}
+      variants={fadeIn}
+      initial="hidden"
+      animate="visible"
       {...props}
     />
   ),

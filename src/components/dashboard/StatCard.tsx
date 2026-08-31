@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { TrendingUp, TrendingDown } from 'lucide-react';
+import { fadeUp, cardHover, cardTap } from '@/lib/motion';
 
 interface StatCardProps {
   title: string;
@@ -24,9 +26,18 @@ const variantStyles = {
 
 export function StatCard({ title, value, icon, trend, className, variant = 'default' }: StatCardProps) {
   const isLight = variant === 'default';
+  const reduceMotion = useReducedMotion();
 
   return (
-    <div className={cn('stat-card', variantStyles[variant], className)}>
+    <motion.div
+      className={cn('stat-card', variantStyles[variant], className)}
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-40px' }}
+      whileHover={reduceMotion ? undefined : cardHover}
+      whileTap={reduceMotion ? undefined : cardTap}
+    >
       <div className="flex items-start justify-between">
         <div className="space-y-2">
           <p className={cn('text-sm font-medium', isLight ? 'text-muted-foreground' : 'opacity-80')}>
@@ -54,6 +65,6 @@ export function StatCard({ title, value, icon, trend, className, variant = 'defa
           {icon}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
